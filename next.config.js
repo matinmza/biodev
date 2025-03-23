@@ -8,6 +8,7 @@ const nextConfig = {
       "seeklogo.com",
       "encrypted-tbn0.gstatic.com",
       "www.engmanagement.dev",
+      "flagcdn.com",
     ],
   },
 };

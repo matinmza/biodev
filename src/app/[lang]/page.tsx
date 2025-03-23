@@ -2,12 +2,14 @@ import { i18n } from "@/i18n/config";
 import type { Locale } from "@/types/i18n";
 
 import ReactGridLayoutContainer from "@/components/packages/react-grid-layout/react-grid-layout-container";
-import ChangeLanguageToggler from "@/components/shared/change-language-toggler";
+import LanguageToggle from "@/components/shared/language-toggle";
+import ThemeToggle from "@/components/shared/theme-toggle";
+
 const items = [
   {
     component: (
-      <div className="rounded-3xl bg-blue-100 w-full h-full flex items-center justify-center ">
-        <ChangeLanguageToggler />
+      <div className="rounded-3xl bg-blue-50/30 dark:bg-blue-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center">
+        <LanguageToggle />
       </div>
     ),
     height: 2,
@@ -18,7 +20,9 @@ const items = [
 
   {
     component: (
-      <div className="rounded-3xl bg-blue-100 w-full h-full flex items-center justify-center "></div>
+      <div className="rounded-3xl bg-purple-50/30 dark:bg-purple-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center">
+        <ThemeToggle />
+      </div>
     ),
     height: 2,
     width: 1,
@@ -28,7 +32,7 @@ const items = [
 
   {
     component: (
-      <div className="rounded-3xl bg-blue-100 w-full h-full flex items-center justify-center "></div>
+      <div className="rounded-3xl bg-pink-50/30 dark:bg-pink-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center"></div>
     ),
     height: 2,
     width: 1,
@@ -37,8 +41,8 @@ const items = [
   },
   {
     component: (
-      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
-        <div className=" rounded-3xl bg-blue-100 w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300">
+      <div className="rounded-3xl bg-emerald-50/30 dark:bg-emerald-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center">
+        <div className="rounded-3xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300">
           {/* <IconPack /> */}
         </div>
       </div>
@@ -50,9 +54,7 @@ const items = [
   },
   {
     component: (
-      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
-        <div className=" rounded-3xl bg-green w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
-      </div>
+      <div className="rounded-3xl bg-amber-50/30 dark:bg-amber-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
     ),
     height: 2,
     width: 1,
@@ -61,9 +63,7 @@ const items = [
   },
   {
     component: (
-      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
-        <div className=" rounded-3xl bg-green w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
-      </div>
+      <div className="rounded-3xl bg-rose-50/30 dark:bg-rose-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
     ),
     height: 2,
     width: 1,
@@ -72,9 +72,7 @@ const items = [
   },
   {
     component: (
-      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
-        <div className=" rounded-3xl bg-green w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
-      </div>
+      <div className="rounded-3xl bg-indigo-50/30 dark:bg-indigo-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
     ),
     height: 2,
     width: 1,
@@ -83,9 +81,7 @@ const items = [
   },
   {
     component: (
-      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
-        <div className=" rounded-3xl bg-green w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
-      </div>
+      <div className="rounded-3xl bg-teal-50/30 dark:bg-teal-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
     ),
     height: 2,
     width: 1,
@@ -94,9 +90,7 @@ const items = [
   },
   {
     component: (
-      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
-        <div className=" rounded-3xl bg-blue w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
-      </div>
+      <div className="rounded-3xl bg-violet-50/30 dark:bg-violet-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
     ),
     height: 2,
     width: 1,
@@ -105,9 +99,7 @@ const items = [
   },
   {
     component: (
-      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
-        <div className=" rounded-3xl bg-blue w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
-      </div>
+      <div className="rounded-3xl bg-cyan-50/30 dark:bg-cyan-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
     ),
     height: 2,
     width: 1,
@@ -116,9 +108,7 @@ const items = [
   },
   {
     component: (
-      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
-        <div className=" rounded-3xl bg-blue w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
-      </div>
+      <div className="rounded-3xl bg-fuchsia-50/30 dark:bg-fuchsia-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
     ),
     height: 2,
     width: 1,
@@ -127,9 +117,7 @@ const items = [
   },
   {
     component: (
-      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
-        <div className=" rounded-3xl bg-blue w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
-      </div>
+      <div className="rounded-3xl bg-sky-50/30 dark:bg-sky-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
     ),
     height: 2,
     width: 1,

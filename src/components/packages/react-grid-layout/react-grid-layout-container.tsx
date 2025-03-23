@@ -11,14 +11,8 @@ const ReactGridLayoutContainer: FC<{ items: GridItem[] }> = ({ items }) => {
       <ResponsiveGridLayout
         breakpoints={{ lg: 1068, xs: 0 }}
         cols={{ lg: 4, xs: 2 }}
-        className={"select-none cursor-grab"}
-        style={{ direction: "ltr" }}
-        // useCSSTransforms
-        autoSize
-        compactType="horizontal"
-        isResizable
-        isDroppable={false}
-        // isDraggable={false}
+        className="select-none cursor-grab"
+        draggableCancel=".not-drag"
       >
         {items.map((item) => (
           <div
