@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { i18n } from "@/i18n/config";
 import { iranSans, sfPro } from "@/config/fonts";
+import type { Locale } from "@/types/i18n";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +18,7 @@ export default function RootLayout({
   params: { lang },
 }: Readonly<{
   children: React.ReactNode;
-  params: { lang: string };
+  params: { lang: Locale };
 }>) {
   return (
     <html lang={lang}>
