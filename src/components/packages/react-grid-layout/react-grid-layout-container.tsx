@@ -1,16 +1,10 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
+import type { GridItem } from "@/types/grid-layout";
+
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-interface ItemI {
-  key: string;
-  component: ReactElement;
-  width: number;
-  height: number;
-  x?: number;
-  y?: number;
-}
-const ReactGridLayoutContainer: FC<{ items: ItemI[] }> = ({ items }) => {
+const ReactGridLayoutContainer: FC<{ items: GridItem[] }> = ({ items }) => {
   return (
     <ResponsiveGridLayout
       breakpoints={{ lg: 1068, xs: 0 }}
