@@ -1,6 +1,7 @@
 import { i18n } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import Link from "next/link";
+import type { Locale } from "@/types/i18n";
 
 export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
@@ -9,9 +10,9 @@ export async function generateStaticParams() {
 export default async function Home({
   params: { lang },
 }: {
-  params: { lang: string };
+  params: { lang: Locale };
 }) {
-  const dict = await getDictionary(lang as any);
+  const dict = await getDictionary(lang);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
