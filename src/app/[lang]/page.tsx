@@ -1,33 +1,156 @@
 import { i18n } from "@/i18n/config";
-import { getDictionary } from "@/i18n/get-dictionary";
-import Link from "next/link";
 import type { Locale } from "@/types/i18n";
+
+import ReactGridLayoutContainer from "@/components/packages/react-grid-layout/react-grid-layout-container";
+import ChangeLanguageToggler from "@/components/shared/change-language-toggler";
+const items = [
+  {
+    component: (
+      <div className="rounded-3xl bg-blue-100 w-full h-full flex items-center justify-center ">
+        <ChangeLanguageToggler />
+      </div>
+    ),
+    height: 2,
+    width: 1,
+    key: "a",
+    x: 0,
+  },
+
+  {
+    component: (
+      <div className="rounded-3xl bg-blue-100 w-full h-full flex items-center justify-center "></div>
+    ),
+    height: 2,
+    width: 1,
+    key: "b",
+    x: 1,
+  },
+
+  {
+    component: (
+      <div className="rounded-3xl bg-blue-100 w-full h-full flex items-center justify-center "></div>
+    ),
+    height: 2,
+    width: 1,
+    key: "c",
+    x: 2,
+  },
+  {
+    component: (
+      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
+        <div className=" rounded-3xl bg-blue-100 w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300">
+          {/* <IconPack /> */}
+        </div>
+      </div>
+    ),
+    height: 4,
+    width: 2,
+    key: "d",
+    x: 3,
+  },
+  {
+    component: (
+      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
+        <div className=" rounded-3xl bg-green w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
+      </div>
+    ),
+    height: 2,
+    width: 1,
+    key: "e",
+    x: 0,
+  },
+  {
+    component: (
+      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
+        <div className=" rounded-3xl bg-green w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
+      </div>
+    ),
+    height: 2,
+    width: 1,
+    key: "f",
+    x: 1,
+  },
+  {
+    component: (
+      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
+        <div className=" rounded-3xl bg-green w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
+      </div>
+    ),
+    height: 2,
+    width: 1,
+    key: "g",
+    x: 2,
+  },
+  {
+    component: (
+      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
+        <div className=" rounded-3xl bg-green w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
+      </div>
+    ),
+    height: 2,
+    width: 1,
+    key: "h",
+    x: 3,
+  },
+  {
+    component: (
+      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
+        <div className=" rounded-3xl bg-blue w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
+      </div>
+    ),
+    height: 2,
+    width: 1,
+    key: "i",
+    x: 0,
+  },
+  {
+    component: (
+      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
+        <div className=" rounded-3xl bg-blue w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
+      </div>
+    ),
+    height: 2,
+    width: 1,
+    key: "j",
+    x: 1,
+  },
+  {
+    component: (
+      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
+        <div className=" rounded-3xl bg-blue w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
+      </div>
+    ),
+    height: 2,
+    width: 1,
+    key: "k",
+    x: 2,
+  },
+  {
+    component: (
+      <div className={`rounded-3xl w-full h-full transition bg-green-100`}>
+        <div className=" rounded-3xl bg-blue w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
+      </div>
+    ),
+    height: 2,
+    width: 1,
+    key: "l",
+    x: 3,
+  },
+];
 
 export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
 }
 
 export default async function Home({
-  params: { lang },
+  params: {},
 }: {
   params: { lang: Locale };
 }) {
-  const dict = await getDictionary(lang);
-
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="font-iran-sans text-2xl font-bold">{dict.name}</div>
-      <div className="font-sf-pro text-2xl font-bold">{dict.welcome}</div>
-      <div className="mt-4">
-        {i18n.locales.map((l) => (
-          <Link
-            key={l}
-            href={`/${l}`}
-            className={`mx-2 ${l === lang ? "text-blue-500" : "text-gray-500"}`}
-          >
-            {l.toUpperCase()}
-          </Link>
-        ))}
+    <div>
+      <div className="container mx-auto">
+        <ReactGridLayoutContainer items={items} />
       </div>
     </div>
   );
