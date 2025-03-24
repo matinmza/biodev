@@ -1,37 +1,44 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import moment from "moment-jalaali";
+import { format as formatJalali } from "date-fns-jalali";
+import { format as formatGregorian } from "date-fns";
+import { faIR } from "date-fns-jalali/locale";
+import { enUS } from "date-fns/locale";
 import { useParams } from "next/navigation";
 
+interface FormattedDateProps {
+  time: Date;
+  lang: string;
+}
+
+const getFormattedDate = ({ time, lang }: FormattedDateProps): string => {
+  return lang === "fa"
+    ? formatJalali(time, "EEEE, d MMMM", { locale: faIR })
+    : formatGregorian(time, "EEEE, MMMM d", { locale: enUS });
+};
+
+const getFormattedTime = (time: Date): string => {
+  return formatGregorian(time, "HH:mm");
+};
+
 export default function Clock() {
-  const [time, setTime] = useState(new Date());
-  const params = useParams();
-  const lang = params.lang as string;
+  const [time, setTime] = useState<Date>(new Date());
+  const { lang } = useParams();
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-
+    const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const getFormattedDate = () => {
-    if (lang === "fa") {
-      return moment(time).format("jYYYY/jMM/jDD");
-    }
-    return moment(time).format("YYYY/MM/DD");
-  };
-
-  const getFormattedTime = () => {
-    return moment(time).format("HH:mm");
-  };
-
   return (
     <div className="flex flex-col items-center justify-center gap-2">
-      <div className="text-[83px] font-medium ">{getFormattedTime()}</div>
-      <div className="text-[22px] font-normal">{getFormattedDate()}</div>
+      <div className="text-[83px] font-medium font-sf-pro">
+        {getFormattedTime(time)}
+      </div>
+      <div className="text-[22px] font-normal">
+        {getFormattedDate({ time, lang: lang as string })}
+      </div>
     </div>
   );
 }
