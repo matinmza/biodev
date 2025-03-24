@@ -3,9 +3,13 @@ import type { Locale } from "@/types/i18n";
 
 import ReactGridLayoutContainer from "@/components/packages/react-grid-layout/react-grid-layout-container";
 import LanguageToggle from "@/components/shared/language-toggle";
-import ThemeToggle from "@/components/shared/theme-toggle";
+
 import BackgroundMain from "./_sections/background-main";
 import Clock from "@/components/shared/clock";
+
+import ImageSlider from "@/components/shared/image-slider";
+import AboutMe from "@/components/shared/about-me";
+import ThemeToggle from "@/components/shared/theme-toggle";
 
 const items = [
   {
@@ -45,10 +49,8 @@ const items = [
   },
   {
     component: (
-      <div className="rounded-3xl bg-emerald-50/30 dark:bg-emerald-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center">
-        <div className="rounded-3xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300">
-          {/* <IconPack /> */}
-        </div>
+      <div className="rounded-3xl bg-emerald-50/30 dark:bg-emerald-900 backdrop-blur-xl w-full h-full flex items-center justify-center">
+        <AboutMe />
       </div>
     ),
     height: 4,
@@ -58,7 +60,11 @@ const items = [
   },
   {
     component: (
-      <div className="rounded-3xl bg-amber-50/30 dark:bg-amber-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
+      <div className="rounded-3xl bg-amber-50/30 dark:bg-amber-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300">
+        <div className="relative w-full h-full">
+          <ImageSlider />
+        </div>
+      </div>
     ),
     height: 2,
     width: 1,
@@ -142,6 +148,7 @@ export default async function Home({
   return (
     <div>
       <div className="container mx-auto">
+        <ThemeToggle />
         <ReactGridLayoutContainer items={items} />
       </div>
       <BackgroundMain />

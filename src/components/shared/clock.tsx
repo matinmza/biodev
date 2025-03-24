@@ -33,7 +33,7 @@ export default function Clock() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-2">
-      <div className="text-[83px] font-medium font-sf-pro text-white">
+      <div className="text-[83px] font-medium font-sf-pro text-white dark:text-black">
         {getFormattedTime(time)}
       </div>
       <div className="text-[22px] font-normal text-white">
