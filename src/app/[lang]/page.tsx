@@ -4,6 +4,7 @@ import type { Locale } from "@/types/i18n";
 import ReactGridLayoutContainer from "@/components/packages/react-grid-layout/react-grid-layout-container";
 import LanguageToggle from "@/components/shared/language-toggle";
 import ThemeToggle from "@/components/shared/theme-toggle";
+import BackgroundMain from "./_sections/background-main";
 
 const items = [
   {
@@ -140,6 +141,7 @@ export default async function Home({
       <div className="container mx-auto">
         <ReactGridLayoutContainer items={items} />
       </div>
+      <BackgroundMain />
     </div>
   );
 }

@@ -25,7 +25,7 @@ body {
 }
 
 .react-grid-placeholder {
-  background-color: #ece9e9;
+  background-color: #ece9e930;
   z-index: 1;
   transition-duration: 300ms;
   -webkit-user-select: none;
@@ -37,7 +37,7 @@ body {
 }
 
 .dark .react-grid-placeholder {
-  background-color: #1d2025;
+  background-color: #1d202550;
 }
 
 .react-draggable-dragging {
