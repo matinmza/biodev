@@ -5,6 +5,7 @@ import ReactGridLayoutContainer from "@/components/packages/react-grid-layout/re
 import LanguageToggle from "@/components/shared/language-toggle";
 import ThemeToggle from "@/components/shared/theme-toggle";
 import BackgroundMain from "./_sections/background-main";
+import Clock from "@/components/shared/clock";
 
 const items = [
   {
@@ -33,7 +34,9 @@ const items = [
 
   {
     component: (
-      <div className="rounded-3xl bg-pink-50/30 dark:bg-pink-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center"></div>
+      <div className="rounded-3xl bg-pink-50/30 dark:bg-pink-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center">
+        <Clock />
+      </div>
     ),
     height: 2,
     width: 1,

@@ -4,6 +4,7 @@ import { i18n } from "@/i18n/config";
 import { iranSans, sfPro } from "@/config/fonts";
 import type { Locale } from "@/types/i18n";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,14 +24,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang={lang} suppressHydrationWarning>
-      <body className={`${sfPro.variable} ${iranSans.variable}`}>
+      <body className={cn(sfPro.variable, iranSans.variable)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div
+            className={cn({
+              "!font-iran-sans": lang === "fa",
+              "!font-sf-pro": lang !== "fa",
+            })}
+          >
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>
