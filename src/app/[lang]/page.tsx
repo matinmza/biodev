@@ -10,7 +10,8 @@ import Clock from "@/components/shared/clock";
 import ImageSlider from "@/components/shared/image-slider";
 import AboutMe from "@/components/shared/about-me";
 import ThemeToggle from "@/components/shared/theme-toggle";
-
+import ColorGradient from "@/components/shared/color-gradient";
+import LogoBox from "@/components/shared/logo-box";
 const items = [
   {
     component: (
@@ -22,8 +23,8 @@ const items = [
     width: 1,
     key: "a",
     x: 0,
+    y: 0,
   },
-
   {
     component: (
       <div className="rounded-3xl bg-purple-50/30 dark:bg-purple-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center">
@@ -34,8 +35,20 @@ const items = [
     width: 1,
     key: "b",
     x: 1,
+    y: 0,
   },
-
+  {
+    component: (
+      <div className="rounded-3xl bg-emerald-50/30 dark:bg-emerald-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center">
+        <AboutMe />
+      </div>
+    ),
+    height: 4,
+    width: 2,
+    key: "d",
+    x: 2,
+    y: 0,
+  },
   {
     component: (
       <div className="rounded-3xl bg-pink-50/30 dark:bg-pink-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center">
@@ -45,19 +58,11 @@ const items = [
     height: 2,
     width: 1,
     key: "c",
-    x: 2,
+    x: 1,
+    y: 1,
   },
-  {
-    component: (
-      <div className="rounded-3xl bg-emerald-50/30 dark:bg-emerald-900 backdrop-blur-xl w-full h-full flex items-center justify-center">
-        <AboutMe />
-      </div>
-    ),
-    height: 4,
-    width: 2,
-    key: "d",
-    x: 3,
-  },
+
+  // Row 2
   {
     component: (
       <div className="rounded-3xl bg-amber-50/30 dark:bg-amber-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300">
@@ -73,66 +78,30 @@ const items = [
   },
   {
     component: (
-      <div className="rounded-3xl bg-rose-50/30 dark:bg-rose-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
+      <div className="rounded-3xl bg-amber-50/30 dark:bg-amber-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300">
+        <div className="relative w-full h-full w-40 h-40 overflow-hidden">
+          {/* <ColorGradient /> */}
+          <LogoBox />
+        </div>
+      </div>
     ),
     height: 2,
     width: 1,
     key: "f",
-    x: 1,
+    x: 0,
+    y: 2,
   },
   {
     component: (
-      <div className="rounded-3xl bg-indigo-50/30 dark:bg-indigo-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
+      <div className="rounded-3xl bg-amber-50/30 dark:bg-amber-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300">
+        <div className=" w-full h-full"></div>
+      </div>
     ),
     height: 2,
     width: 1,
     key: "g",
-    x: 2,
-  },
-  {
-    component: (
-      <div className="rounded-3xl bg-teal-50/30 dark:bg-teal-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
-    ),
-    height: 2,
-    width: 1,
-    key: "h",
-    x: 3,
-  },
-  {
-    component: (
-      <div className="rounded-3xl bg-violet-50/30 dark:bg-violet-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
-    ),
-    height: 2,
-    width: 1,
-    key: "i",
-    x: 0,
-  },
-  {
-    component: (
-      <div className="rounded-3xl bg-cyan-50/30 dark:bg-cyan-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
-    ),
-    height: 2,
-    width: 1,
-    key: "j",
     x: 1,
-  },
-  {
-    component: (
-      <div className="rounded-3xl bg-fuchsia-50/30 dark:bg-fuchsia-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
-    ),
-    height: 2,
-    width: 1,
-    key: "k",
-    x: 2,
-  },
-  {
-    component: (
-      <div className="rounded-3xl bg-sky-50/30 dark:bg-sky-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300"></div>
-    ),
-    height: 2,
-    width: 1,
-    key: "l",
-    x: 3,
+    y: 2,
   },
 ];
 
@@ -140,15 +109,10 @@ export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
 }
 
-export default async function Home({
-  params: {},
-}: {
-  params: { lang: Locale };
-}) {
+export default function Home({ params: {} }: { params: { lang: Locale } }) {
   return (
     <div>
       <div className="container mx-auto">
-        <ThemeToggle />
         <ReactGridLayoutContainer items={items} />
       </div>
       <BackgroundMain />

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/use-translation";
-
+import { useParams } from "next/navigation";
 const skills = [
   {
     category: "frontend",
@@ -25,6 +25,7 @@ const skills = [
 const companies = ["hayweb", "parsonline", "selfit"] as const;
 
 export default function AboutMe() {
+  const { lang } = useParams();
   const t = useTranslation();
 
   if (!t) return null;
@@ -56,13 +57,14 @@ export default function AboutMe() {
       animate="visible"
       variants={containerVariants}
       className="w-full h-full p-6 flex flex-col gap-6 overflow-y-auto"
+      dir={lang === "fa" ? "rtl" : "ltr"}
     >
       <motion.div variants={itemVariants} className="space-y-2">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-700 dark:from-blue-500 dark:to-purple-500 bg-clip-text text-transparent">
           {t.name}
         </h1>
         <h2 className="text-2xl text-gray-800 dark:text-white">{t.role}</h2>
-        <p className="text-gray-700 dark:text-gray-100">{t.description}</p>
+        <p className="text-gray-100 dark:text-gray-100">{t.description}</p>
       </motion.div>
 
       <motion.div variants={itemVariants} className="space-y-4">

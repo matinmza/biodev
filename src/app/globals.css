@@ -6,6 +6,7 @@
   --font-iran-sans: var(--font-iran-sans);
   --font-sf-pro: var(--font-sf-pro);
 }
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* @media (prefers-color-scheme: dark) {
   :root {
@@ -62,4 +63,93 @@
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
+}
+
+.scrollbar-ios {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.dark .scrollbar-ios {
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.scrollbar-ios::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-ios::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-ios::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.dark .scrollbar-ios::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.scrollbar-ios::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.dark .scrollbar-ios::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.gallery-container {
+  background-color: #eeeeee;
+  border-radius: 25px;
+  width: 500px;
+  height: 500px;
+  margin: 0;
+  padding: 0 20px 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: space-between;
+  list-style: none;
+}
+
+.gallery-item {
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  margin: 20px 0 0 20px;
+  flex: 1 1 100px;
+}
+
+.overlay {
+  background: white;
+  opacity: 0.2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.single-image-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.single-image-container * {
+  pointer-events: all;
+}
+
+.single-image {
+  border-radius: 20px;
+  width: 500px;
+  height: 300px;
 }

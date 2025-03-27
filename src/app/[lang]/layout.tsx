@@ -23,8 +23,12 @@ export default function RootLayout({
   params: { lang: Locale };
 }) {
   return (
-    <html lang={lang} suppressHydrationWarning>
-      <body className={cn(sfPro.variable, iranSans.variable)}>
+    <html
+      lang={lang}
+      dir={lang === "fa" ? "rtl" : "ltr"}
+      suppressHydrationWarning
+    >
+      <body className={cn(sfPro.variable, iranSans.variable, "scrollbar-ios")}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
