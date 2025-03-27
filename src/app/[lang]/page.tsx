@@ -12,6 +12,7 @@ import AboutMe from "@/components/shared/about-me";
 import ThemeToggle from "@/components/shared/theme-toggle";
 import ColorGradient from "@/components/shared/color-gradient";
 import LogoBox from "@/components/shared/logo-box";
+import WorkCard from "@/components/shared/work-card";
 const items = [
   {
     component: (
@@ -94,7 +95,9 @@ const items = [
   {
     component: (
       <div className="rounded-3xl bg-amber-50/30 dark:bg-amber-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300">
-        <div className=" w-full h-full"></div>
+        <div className=" w-full h-full">
+          <WorkCard />
+        </div>
       </div>
     ),
     height: 2,
