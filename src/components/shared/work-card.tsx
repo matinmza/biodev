@@ -1,9 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { motion, useSpring, useMotionTemplate, transform } from "framer-motion";
 import Image from "next/image";
 
-export default function WorkCard() {
+const WorkCard: FC<{
+  icon: string;
+  bg?: string;
+}> = ({ icon, bg }) => {
   /* State */
   const [frame, setFrame] = useState({
     width: 0,
@@ -97,7 +100,8 @@ export default function WorkCard() {
             display: "flex",
             placeItems: "center",
             placeContent: "center",
-            background: "linear-gradient(180deg, #0CF 0%, #86F 100%)",
+
+            background: bg,
           }}
           className="w-full h-full rounded-3xl flex items-center justify-center"
         >
@@ -110,7 +114,7 @@ export default function WorkCard() {
             className="relative"
           >
             <Image
-              src="/images/works/ai-assistant.svg"
+              src={icon}
               alt="ai-assistant"
               width={200}
               height={200}
@@ -121,4 +125,6 @@ export default function WorkCard() {
       </motion.div>
     </motion.div>
   );
-}
+};
+
+export default WorkCard;

@@ -10,7 +10,7 @@ import Clock from "@/components/shared/clock";
 import ImageSlider from "@/components/shared/image-slider";
 import AboutMe from "@/components/shared/about-me";
 import ThemeToggle from "@/components/shared/theme-toggle";
-import ColorGradient from "@/components/shared/color-gradient";
+// import ColorGradient from "@/components/shared/color-gradient";
 import LogoBox from "@/components/shared/logo-box";
 import WorkCard from "@/components/shared/work-card";
 const items = [
@@ -80,7 +80,7 @@ const items = [
   {
     component: (
       <div className="rounded-3xl bg-amber-50/30 dark:bg-amber-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300">
-        <div className="relative w-full h-full w-40 h-40 overflow-hidden">
+        <div className="relative w-full h-full overflow-hidden">
           {/* <ColorGradient /> */}
           <LogoBox />
         </div>
@@ -96,7 +96,7 @@ const items = [
     component: (
       <div className="rounded-3xl bg-amber-50/30 dark:bg-amber-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300">
         <div className=" w-full h-full">
-          <WorkCard />
+          <WorkCard icon="/images/works/ai-assistant.svg" />
         </div>
       </div>
     ),
@@ -104,6 +104,23 @@ const items = [
     width: 1,
     key: "g",
     x: 1,
+    y: 2,
+  },
+  {
+    component: (
+      <div className="rounded-3xl bg-amber-50/30 dark:bg-amber-900/20 backdrop-blur-xl w-full h-full flex items-center justify-center transition-all duration-300 absolute top-0 delay-300">
+        <div className=" w-full h-full">
+          <WorkCard
+            icon="/images/works/farda-ins.svg"
+            bg="linear-gradient(-225deg, #ffffff50 0%, #FFffff80 48%, #FFffff40 100%)"
+          />
+        </div>
+      </div>
+    ),
+    height: 2,
+    width: 1,
+    key: "h",
+    x: 2,
     y: 2,
   },
 ];
