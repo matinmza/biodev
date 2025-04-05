@@ -7,7 +7,12 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        iranSans: ["var(--font-iran-sans)", "var(--font-sf-pro)"],
+        sfPro: ["var(--font-sf-pro)", "var(--font-iran-sans)"],
+      },
+    },
   },
   plugins: [],
 };

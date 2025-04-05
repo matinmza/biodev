@@ -3,6 +3,8 @@ import "../globals.css";
 import { i18n } from "@/i18n/config";
 import { iranSans, sfPro } from "@/config/fonts";
 import type { Locale } from "@/types/i18n";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,14 +18,32 @@ export async function generateStaticParams() {
 export default function RootLayout({
   children,
   params: { lang },
-}: Readonly<{
+}: {
   children: React.ReactNode;
   params: { lang: Locale };
-}>) {
+}) {
   return (
-    <html lang={lang}>
-      <body className={`${sfPro.variable} ${iranSans.variable}`}>
-        {children}
+    <html
+      lang={lang}
+      dir={lang === "fa" ? "rtl" : "ltr"}
+      suppressHydrationWarning
+    >
+      <body className={cn(sfPro.variable, iranSans.variable, "scrollbar-ios")}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div
+            className={cn({
+              "!font-iran-sans": lang === "fa",
+              "!font-sf-pro": lang !== "fa",
+            })}
+          >
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

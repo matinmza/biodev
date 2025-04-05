@@ -1,4 +1,30 @@
 {
-  "welcome": "Welcome",
-  "name": "matin 12"
+  "about": {
+    "title": "About Me",
+    "name": "Matin Zarif Amin",
+    "role": "Full Stack Developer",
+    "description": "Developer with over 6 years of experience in web development and programming",
+    "skills": {
+      "title": "Skills",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "ai": "Artificial Intelligence",
+      "tools": "Tools"
+    },
+    "experience": {
+      "title": "Experience",
+      "companies": {
+        "hayweb": "Hiweb",
+        "parsonline": "Pars Online",
+        "selfit": "Selfit"
+      }
+    },
+    "interests": {
+      "title": "Interests",
+      "team": "Team Work",
+      "leadership": "Team Leadership",
+      "challenges": "New Challenges",
+      "git": "Version Control"
+    }
+  }
 }
