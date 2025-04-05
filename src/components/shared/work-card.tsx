@@ -2,6 +2,7 @@
 import React, { FC, useState } from "react";
 import { motion, useSpring, useMotionTemplate, transform } from "framer-motion";
 import Image from "next/image";
+import Modal from "./modal";
 
 const WorkCard: FC<{
   icon: string;
@@ -14,7 +15,7 @@ const WorkCard: FC<{
     top: 0,
     left: 0,
   });
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   /* Constants */
   /* Customize these to change the intensity of the 
   transforms and the bounciness of the animations. */
@@ -91,6 +92,7 @@ const WorkCard: FC<{
         style={{
           cursor: "pointer",
         }}
+        onClick={() => setIsModalOpen(true)}
         className="w-full h-full"
       >
         <motion.div
@@ -123,6 +125,10 @@ const WorkCard: FC<{
           </motion.div>
         </motion.div>
       </motion.div>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className="w-[300px] h-[300px] rounded-3xl bg-red-300"></div>
+      </Modal>
     </motion.div>
   );
 };

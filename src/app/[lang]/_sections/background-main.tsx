@@ -5,12 +5,10 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import Modal from "@/components/shared/modal";
 
 const BackgroundMain = () => {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -21,10 +19,6 @@ const BackgroundMain = () => {
   }
   return (
     <>
-      <button onClick={() => setIsModalOpen(true)}>open modal</button>
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div className="w-[300px] h-[300px] rounded-3xl bg-red-300"></div>
-      </Modal>
       <div className="fixed inset-0 z-[-1]">
         <AnimatePresence>
           <motion.div
