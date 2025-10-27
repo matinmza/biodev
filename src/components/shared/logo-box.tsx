@@ -31,7 +31,7 @@ export default function LogoBox() {
   const filter = useMotionTemplate`drop-shadow(${shadowX}px ${shadowY}px 20px rgba(0, 0, 68, 0.25))`;
 
   /* Convert cursor position values */
-  const convertCursorPosition = (e) => {
+  const convertCursorPosition = (e:any) => {
     const objectX = (e.nativeEvent.clientX - frame.left) / frame.width;
     const objectY = (e.nativeEvent.clientY - frame.top) / frame.height;
 
@@ -45,7 +45,7 @@ export default function LogoBox() {
   };
 
   /* On Mouse Enter, get object frame and convert values */
-  const handleMouseEnter = (e) => {
+  const handleMouseEnter = (e:any) => {
     const currentElement = e.target.getBoundingClientRect();
 
     setFrame({
@@ -59,12 +59,12 @@ export default function LogoBox() {
   };
 
   /* On Mouse Move, convert values */
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e:any) => {
     convertCursorPosition(e);
   };
 
   /* On Mouse Leave, reset */
-  const handleMouseLeave = (e) => {
+  const handleMouseLeave = () => {
     rotateX.set(0);
     rotateY.set(0);
     x.set(0);
