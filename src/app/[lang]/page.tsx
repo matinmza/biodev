@@ -129,7 +129,7 @@ export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
 }
 
-export default function Home({ params: {} }: { params: { lang: Locale } }) {
+export default function Home() {
   return (
     <div>
       <div className="container mx-auto">

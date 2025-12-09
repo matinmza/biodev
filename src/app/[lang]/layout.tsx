@@ -15,31 +15,41 @@ export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
 }
 
-export default function RootLayout({
-  children,
-  params: { lang },
-}: {
+// تعریف تایپ پرامیس برای پارامترها طبق استاندارد Next.js 16
+type Props = {
   children: React.ReactNode;
-  params: { lang: Locale };
-}) {
+  params: Promise<{ lang: Locale }>;
+};
+
+export default async function RootLayout({ children, params }: Props) {
+  // ⭐️ فیکس اصلی: منتظر ماندن برای ریزالو شدن پارامترها
+  const { lang } = await params;
+
   return (
     <html
       lang={lang}
       dir={lang === "fa" ? "rtl" : "ltr"}
       suppressHydrationWarning
     >
-      <body className={cn(sfPro.variable, iranSans.variable, "scrollbar-ios")}>
+      <body className={cn(sfPro.variable, iranSans.variable, "scrollbar-ios antialiased")}>
         <ThemeProvider
-          attribute="class"
+          attribute="class" // برای تم دارک/لایت Tailwind
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          {/* 
+            نکته: بهتره فونت رو مستقیما روی بادی مدیریت کنی یا کلس‌های شرطی رو ساده‌تر کنی.
+            اما این روشی که نوشتی هم کار می‌کنه.
+          */}
           <div
-            className={cn({
-              "!font-iran-sans": lang === "fa",
-              "!font-sf-pro": lang !== "fa",
-            })}
+            className={cn(
+              "min-h-screen bg-background text-foreground", // اضافه کردن استایل‌های پایه تم
+              {
+                "font-iran-sans": lang === "fa",
+                "font-sf-pro": lang !== "fa",
+              }
+            )}
           >
             {children}
           </div>

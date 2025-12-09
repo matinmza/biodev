@@ -84,6 +84,7 @@ const WorkCard: FC<{
         perspective: 1200,
       }}
       className="w-full h-full"
+      onClick={() => setIsModalOpen(true)}
     >
       <motion.div
         onMouseEnter={handleMouseEnter}
@@ -92,7 +93,6 @@ const WorkCard: FC<{
         style={{
           cursor: "pointer",
         }}
-        onClick={() => setIsModalOpen(true)}
         className="w-full h-full"
       >
         <motion.div
