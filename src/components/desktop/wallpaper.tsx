@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/components/providers/theme-provider";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMounted } from "@/hooks/use-mounted";
 

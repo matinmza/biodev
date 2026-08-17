@@ -18,6 +18,14 @@
   color-scheme: light;
 }
 
+/* Pre-hydration fallback: match the OS theme until theme-init.js runs. */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --desktop-ground: #0a0b10;
+    color-scheme: dark;
+  }
+}
+
 .dark {
   --desktop-ground: #0a0b10;
   color-scheme: dark;
@@ -30,18 +38,24 @@ body {
 
 /* ---------- Surfaces ---------- */
 
+/* iOS-style frosted material: opaque enough that text always stays legible
+   over any wallpaper, blurred and desaturated like a real sheet. */
 .glass {
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  background: rgb(255 255 255 / 0.55);
-  border: 1px solid rgb(255 255 255 / 0.5);
-  box-shadow: 0 8px 32px rgb(10 10 30 / 0.12);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  background: rgb(250 250 252 / 0.78);
+  border: 1px solid rgb(255 255 255 / 0.65);
+  box-shadow:
+    0 1px 1px rgb(255 255 255 / 0.6) inset,
+    0 12px 32px rgb(10 10 30 / 0.14);
 }
 
 .dark .glass {
-  background: rgb(22 24 32 / 0.55);
-  border-color: rgb(255 255 255 / 0.12);
-  box-shadow: 0 8px 32px rgb(0 0 0 / 0.35);
+  background: rgb(28 28 34 / 0.72);
+  border-color: rgb(255 255 255 / 0.14);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.08) inset,
+    0 12px 32px rgb(0 0 0 / 0.45);
 }
 
 .widget-title {
@@ -50,11 +64,19 @@ body {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgb(60 60 80 / 0.65);
+  color: rgb(50 50 70 / 0.75);
 }
 
 .dark .widget-title {
-  color: rgb(235 235 245 / 0.5);
+  color: rgb(235 235 245 / 0.6);
+}
+
+/* Persian labels aren't mono/uppercase — give them the Persian face. */
+[dir="rtl"] .widget-title {
+  font-family: var(--font-iran-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0;
+  font-weight: 600;
 }
 
 /* Visible keyboard focus, invisible mouse focus. */

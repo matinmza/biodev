@@ -2,11 +2,12 @@
 
 import { GraduationCap } from "lucide-react";
 import { useI18n } from "@/i18n/i18n-provider";
+import { cn } from "@/lib/utils";
 import WidgetShell from "../widget-shell";
 
 /** Career timeline: roles, then the education footnote. */
 export default function ExperienceWidget() {
-  const { dict } = useI18n();
+  const { dict, lang } = useI18n();
   const { items, education } = dict.experience;
 
   return (
@@ -22,18 +23,24 @@ export default function ExperienceWidget() {
               <h3 className="text-sm font-bold text-zinc-900 dark:text-white">
                 {job.company}
               </h3>
-              <span className="font-mono text-[10px] tabular-nums text-zinc-500 dark:text-zinc-400">
+              <span
+                className={cn(
+                  "text-[10px] tabular-nums text-zinc-600 dark:text-zinc-300",
+                  // Persian periods use Persian digits — mono has none.
+                  lang === "fa" ? "font-iran-sans" : "font-mono"
+                )}
+              >
                 {job.period}
               </span>
             </div>
-            <p className="text-xs font-medium text-zinc-600 dark:text-zinc-300">
+            <p className="text-xs font-semibold text-zinc-700 dark:text-zinc-200">
               {job.role}
             </p>
             <ul className="mt-1.5 space-y-1">
               {job.points.map((point) => (
                 <li
                   key={point}
-                  className="text-xs leading-5 text-zinc-600 dark:text-zinc-400"
+                  className="text-xs leading-5 text-zinc-700 dark:text-zinc-300"
                 >
                   {point}
                 </li>
@@ -43,7 +50,7 @@ export default function ExperienceWidget() {
         ))}
       </ol>
 
-      <div className="mt-4 flex items-center gap-2 border-t border-black/5 pt-3 text-xs text-zinc-600 dark:border-white/10 dark:text-zinc-400">
+      <div className="mt-4 flex items-center gap-2 border-t border-black/5 pt-3 text-xs text-zinc-700 dark:border-white/10 dark:text-zinc-300">
         <GraduationCap size={14} className="shrink-0" />
         <span>
           {education.degree} · {education.school} · {education.period}

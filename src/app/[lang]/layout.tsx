@@ -78,12 +78,9 @@ export default async function RootLayout({ children, params }: Props) {
           lang === "fa" ? "font-iran-sans" : "font-sf-pro"
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        {/* React 19 hoists async src scripts to <head> and executes them. */}
+        <script async src="/theme-init.js" />
+        <ThemeProvider>
           <I18nProvider dict={dict} lang={lang}>
             {children}
           </I18nProvider>

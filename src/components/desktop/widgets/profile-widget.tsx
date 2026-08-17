@@ -45,7 +45,7 @@ export default function ProfileWidget() {
             />
           </div>
           <div className="min-w-0">
-            <h1 className="truncate text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
+            <h1 className="truncate text-2xl font-bold tracking-tight text-zinc-900 rtl:tracking-normal dark:text-white">
               {dict.profile.name}
             </h1>
             <p className="bg-gradient-to-r from-accent-cyan to-accent-violet bg-clip-text text-sm font-semibold text-transparent">
@@ -63,7 +63,7 @@ export default function ProfileWidget() {
 
         <motion.p
           variants={item}
-          className="text-sm leading-6 text-zinc-600 dark:text-zinc-300"
+          className="text-sm leading-7 text-zinc-700 dark:text-zinc-200"
         >
           {dict.profile.summary}
         </motion.p>
@@ -98,7 +98,7 @@ export default function ProfileWidget() {
 
         <motion.div
           variants={item}
-          className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-zinc-600 dark:text-zinc-400"
+          className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-zinc-700 dark:text-zinc-300"
         >
           <span className="flex items-center gap-1">
             <MapPin size={12} />

@@ -74,7 +74,7 @@ export default function Desktop() {
       <div dir="ltr" className="mx-auto max-w-6xl px-4 pb-36 pt-14">
         <DesktopGrid layouts={LAYOUTS} entries={ENTRIES} />
 
-        <footer className="mt-6 text-center text-xs text-white/60 [text-shadow:0_1px_2px_rgb(0_0_0/0.4)]">
+        <footer className="mt-6 text-center text-xs font-medium text-white/85 [text-shadow:0_1px_3px_rgb(0_0_0/0.55)]">
           {dict.footer.madeWith}
         </footer>
       </div>

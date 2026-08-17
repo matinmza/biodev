@@ -5,7 +5,7 @@ import { afterEach, vi } from "vitest";
 // Without vitest globals, testing-library's auto-cleanup doesn't register.
 afterEach(() => cleanup());
 
-// jsdom lacks a few browser APIs that framer-motion and next-themes use.
+// jsdom lacks a few browser APIs that framer-motion and the theme provider use.
 if (!window.matchMedia) {
   window.matchMedia = vi.fn().mockImplementation((query: string) => ({
     matches: false,

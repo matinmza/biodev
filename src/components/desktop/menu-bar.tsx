@@ -21,24 +21,25 @@ function MenuClock() {
     return () => clearInterval(timer);
   }, []);
 
-  if (!mounted) return <span className="w-10" />;
+  if (!mounted) return <span className="min-w-10" />;
 
   return (
-    <span className="w-10 text-center text-xs font-medium tabular-nums">
+    <span className="min-w-10 text-center text-xs font-semibold tabular-nums">
       {localizeDigits(formatTime(now), lang)}
     </span>
   );
 }
 
+/** iOS control-center style: a soft frosted circle around each control. */
 const iconLink =
-  "flex h-7 w-7 items-center justify-center rounded-lg transition-colors hover:bg-black/10 dark:hover:bg-white/10";
+  "flex h-7 w-7 items-center justify-center rounded-full bg-black/[0.06] text-zinc-700 transition-all hover:bg-black/[0.12] hover:scale-105 active:scale-95 dark:bg-white/10 dark:text-zinc-200 dark:hover:bg-white/20";
 
 /** macOS-style system bar: identity on one side, controls on the other. */
 export default function MenuBar() {
   const { dict } = useI18n();
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 flex h-10 items-center justify-between border-b border-white/40 bg-white/55 px-3 text-zinc-800 backdrop-blur-2xl sm:px-4 dark:border-white/10 dark:bg-zinc-900/55 dark:text-zinc-100">
+    <header className="fixed inset-x-0 top-0 z-40 flex h-11 items-center justify-between border-b border-white/50 bg-white/75 px-3 text-zinc-800 backdrop-blur-2xl sm:px-4 dark:border-white/10 dark:bg-zinc-900/70 dark:text-zinc-100">
       <div className="flex items-center gap-2">
         <BoltLogo className="h-4 w-4" />
         <span className="text-sm font-semibold tracking-tight">
@@ -49,7 +50,7 @@ export default function MenuBar() {
         </span>
       </div>
 
-      <div className="flex items-center gap-0.5">
+      <div className="flex items-center gap-1.5">
         <a
           href={profile.social.github}
           target="_blank"
@@ -57,7 +58,7 @@ export default function MenuBar() {
           aria-label={dict.profile.cta.github}
           className={iconLink}
         >
-          <GitHubIcon />
+          <GitHubIcon className="h-3.5 w-3.5" />
         </a>
         <a
           href={profile.social.linkedin}
@@ -66,14 +67,14 @@ export default function MenuBar() {
           aria-label={dict.profile.cta.linkedin}
           className={iconLink}
         >
-          <LinkedInIcon />
+          <LinkedInIcon className="h-3.5 w-3.5" />
         </a>
         <a
           href={profile.social.email}
           aria-label={dict.profile.cta.email}
           className={iconLink}
         >
-          <Mail size={15} />
+          <Mail size={14} strokeWidth={1.75} />
         </a>
         <span className="mx-1 h-4 w-px bg-black/15 dark:bg-white/15" />
         <LanguageToggle />

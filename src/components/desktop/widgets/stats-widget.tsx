@@ -25,7 +25,7 @@ export default function StatsWidget() {
             <span className="bg-gradient-to-r from-accent-cyan to-accent-violet bg-clip-text text-2xl font-bold tabular-nums text-transparent">
               {stat.value}
             </span>
-            <span className="text-[11px] leading-tight text-zinc-600 dark:text-zinc-400">
+            <span className="text-[11px] font-medium leading-tight text-zinc-700 dark:text-zinc-300">
               {stat.label}
             </span>
           </motion.div>
