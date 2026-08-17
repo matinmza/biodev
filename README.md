@@ -1,4 +1,4 @@
-# MatinOS — Portfolio of Matin Zarifamin
+# MatinOS — Portfolio of Matin Zarifamin, Senior Frontend Engineer
 
 A personal portfolio built as a tiny operating system: a draggable widget
 desktop, a macOS-style dock where every shipped project is an app, and a

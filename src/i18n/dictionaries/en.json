@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "Matin Zarifamin — Frontend Team Lead",
-    "description": "Portfolio of Matin Zarifamin: frontend team lead building AI-driven products, real-time dashboards and design systems with React & Next.js for 900K+ users.",
-    "keywords": "Matin Zarifamin, Frontend, React, Next.js, TypeScript, Team Lead, Tehran"
+    "title": "Matin Zarifamin — Senior Frontend Engineer",
+    "description": "Portfolio of Matin Zarifamin: senior frontend engineer building AI-driven products, real-time dashboards and design systems with React & Next.js for 900K+ users.",
+    "keywords": "Matin Zarifamin, Senior Frontend Engineer, Frontend, React, Next.js, TypeScript, Tehran"
   },
   "boot": {
     "tagline": "personal operating system",
@@ -18,7 +18,7 @@
   "profile": {
     "widgetTitle": "About",
     "name": "Matin Zarifamin",
-    "role": "Frontend Team Lead",
+    "role": "Senior Frontend Engineer",
     "tagline": "I build interfaces that feel instant.",
     "summary": "Senior frontend engineer with 5+ years crafting AI-driven products, real-time dashboards and design systems. At Hiweb / Selfit I lead a 4-person frontend team, shipping React & Next.js experiences to 900K+ users — obsessed with Core Web Vitals and interfaces that feel alive.",
     "location": "Tehran, Iran",
@@ -54,7 +54,7 @@
     "items": [
       {
         "company": "Hiweb / Selfit",
-        "role": "Frontend Team Lead",
+        "role": "Senior Frontend Engineer",
         "period": "2022 — Present",
         "points": [
           "Leading a 4-person frontend team across SaaS, PWA and AI products.",
@@ -96,7 +96,7 @@
       "visit": "Visit project"
     },
     "roles": {
-      "lead": "Frontend Team Lead",
+      "senior": "Senior Frontend Engineer",
       "engineer": "Frontend Engineer"
     },
     "items": {

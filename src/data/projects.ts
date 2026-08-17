@@ -19,7 +19,7 @@ export type ProjectId = (typeof PROJECT_IDS)[number];
 export interface Project {
   id: ProjectId;
   /** Which dictionary role label applies: `projects.roles[role]` */
-  role: "lead" | "engineer";
+  role: "senior" | "engineer";
   /** Display period, latin digits — localized rendering handles digits. */
   period: string;
   /** App-icon gradient, top → bottom. */
@@ -31,42 +31,42 @@ export interface Project {
 export const projects: readonly Project[] = [
   {
     id: "hiweb-ai",
-    role: "lead",
+    role: "senior",
     period: "2023 — 2025",
     gradient: ["#00CCFF", "#8866FF"],
     stack: ["Next.js", "TypeScript", "SSE Streaming", "OpenAI", "Tailwind"],
   },
   {
     id: "selfit-coach",
-    role: "lead",
+    role: "senior",
     period: "2024 — 2025",
     gradient: ["#FF7A59", "#FF3D81"],
     stack: ["Web Components", "TypeScript", "LLM Workflows", "Vite"],
   },
   {
     id: "selfit-app",
-    role: "lead",
+    role: "senior",
     period: "2022 — Present",
     gradient: ["#34D399", "#0EA5E9"],
     stack: ["Next.js", "PWA", "React Query", "Sentry", "RUM"],
   },
   {
     id: "selfit-b2b",
-    role: "lead",
+    role: "senior",
     period: "2022 — Present",
     gradient: ["#6366F1", "#A855F7"],
     stack: ["React", "TypeScript", "ECharts", "Virtualization", "RBAC"],
   },
   {
     id: "seltrip",
-    role: "lead",
+    role: "senior",
     period: "2023 — 2024",
     gradient: ["#F59E0B", "#EF4444"],
     stack: ["Next.js App Router", "RSC", "ISR", "Edge Caching"],
   },
   {
     id: "esim",
-    role: "lead",
+    role: "senior",
     period: "2024",
     gradient: ["#22D3EE", "#3B82F6"],
     stack: ["Next.js", "TypeScript", "Design System", "Payments"],
@@ -80,7 +80,7 @@ export const projects: readonly Project[] = [
   },
   {
     id: "prodoc",
-    role: "lead",
+    role: "senior",
     period: "2024",
     gradient: ["#94A3B8", "#475569"],
     stack: ["Next.js", "SSG", "SEO", "Motion"],

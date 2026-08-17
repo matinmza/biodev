@@ -22,12 +22,12 @@ describe("terminal command engine", () => {
     expect(result).toEqual({ type: "output", lines: [] });
   });
 
-  it("introduces Matin as a frontend team lead on `whoami`", () => {
+  it("introduces Matin as a senior frontend engineer on `whoami`", () => {
     const result = runCommand("whoami");
     if (result.type !== "output") throw new Error("expected output");
     const text = result.lines.join(" ");
     expect(text).toContain("Matin Zarifamin");
-    expect(text).toContain("Frontend Team Lead");
+    expect(text).toContain("Senior Frontend Engineer");
     expect(text).toContain("4-person");
   });
 

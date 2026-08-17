@@ -40,4 +40,12 @@ describe("i18n dictionaries", () => {
     expect(en.profile.summary).toContain("4-person");
     expect(fa.profile.summary).toContain("۴ نفره");
   });
+
+  it("titles Matin as a senior frontend engineer, not a team lead", () => {
+    expect(en.profile.role).toBe("Senior Frontend Engineer");
+    expect(en.meta.title).toContain("Senior Frontend Engineer");
+    expect(fa.profile.role).toBe("مهندس ارشد فرانت‌اند");
+    expect(JSON.stringify(en)).not.toContain("Team Lead");
+    expect(JSON.stringify(fa)).not.toContain("تیم‌لید");
+  });
 });

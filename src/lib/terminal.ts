@@ -49,7 +49,7 @@ export function runCommand(input: string): TerminalResult {
 
     case "whoami":
       return out(
-        "Matin Zarifamin — Frontend Team Lead @ Hiweb / Selfit",
+        "Matin Zarifamin — Senior Frontend Engineer @ Hiweb / Selfit",
         "5+ years building AI-driven products, real-time dashboards",
         "and design systems for 900K+ users. Tehran, Iran.",
         "Leading a 4-person frontend team. Obsessed with Web Vitals."
@@ -91,7 +91,7 @@ export function runCommand(input: string): TerminalResult {
     case "experience":
     case "exp":
       return out(
-        "2022 — now   Frontend Team Lead @ Hiweb / Selfit",
+        "2022 — now   Senior Frontend Engineer @ Hiweb / Selfit",
         "             4-person team · design system · AI products",
         "2020 — 2022  Frontend Engineer @ Satpay",
         "             real-time analytics dashboards"

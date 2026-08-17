@@ -5,7 +5,7 @@ import { profile } from "@/data/profile";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Matin Zarifamin — Frontend Team Lead";
+export const alt = "Matin Zarifamin — Senior Frontend Engineer";
 
 /** Prerender the card for both locales so crawlers never wait on it. */
 export function generateStaticParams() {
@@ -27,7 +27,7 @@ export default async function OpengraphImage({
     ["5+", "years"],
     ["900K+", "users"],
     ["60+", "components"],
-    ["4", "person team"],
+    ["4", "person team led"],
   ];
 
   return new ImageResponse(
@@ -69,7 +69,7 @@ export default async function OpengraphImage({
             {name}
           </div>
           <div style={{ fontSize: 40, color: "#00CCFF", fontWeight: 600 }}>
-            Frontend Team Lead
+            Senior Frontend Engineer
           </div>
           <div style={{ fontSize: 28, color: "#A7AEBF", maxWidth: 900 }}>
             React &amp; Next.js · AI products, real-time dashboards, design
