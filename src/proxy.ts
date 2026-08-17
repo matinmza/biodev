@@ -16,7 +16,8 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
+  // Everything that is not a page: assets, metadata routes, generated icons.
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|images|robots.txt|sitemap.xml|theme-init.js).*)",
+    "/((?!api|_next|images|favicon.ico|icon.svg|apple-icon|opengraph-image|theme-init.js|robots.txt|sitemap.xml|manifest.webmanifest).*)",
   ],
 };

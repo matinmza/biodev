@@ -40,7 +40,7 @@ export default function AppIcon({ id, className, iconClassName }: AppIconProps) 
         backgroundImage: `linear-gradient(180deg, ${gradient[0]}, ${gradient[1]})`,
       }}
       className={cn(
-        "flex items-center justify-center rounded-[24%] shadow-lg shadow-black/20",
+        "soft-btn flex items-center justify-center rounded-[24%]",
         className
       )}
     >

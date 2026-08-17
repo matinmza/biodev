@@ -11,7 +11,9 @@
   "menu": {
     "os": "MatinOS",
     "themeToggle": "Switch theme",
-    "langToggle": "تغییر زبان به فارسی"
+    "langToggle": "Language",
+    "english": "English",
+    "persian": "فارسی"
   },
   "profile": {
     "widgetTitle": "About",
@@ -84,6 +86,8 @@
   "projects": {
     "widgetTitle": "Projects",
     "dockLabel": "Projects dock",
+    "dockTitle": "My projects",
+    "dockHint": "Click an app to read the story",
     "meta": {
       "role": "Role",
       "period": "Period",

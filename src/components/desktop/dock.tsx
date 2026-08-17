@@ -56,7 +56,7 @@ function DockIcon({ id, name, mouseX, onOpen, isActive }: DockIconProps) {
       >
         {name}
       </span>
-      <AppIcon id={id} className="h-full w-full transition-shadow group-hover:shadow-xl" />
+      <AppIcon id={id} className="h-full w-full" />
       <span
         aria-hidden
         className={
@@ -69,7 +69,7 @@ function DockIcon({ id, name, mouseX, onOpen, isActive }: DockIconProps) {
   );
 }
 
-/** The projects dock — every shipped product is an app. */
+/** The projects dock — every shipped product is an app you can open. */
 export default function Dock() {
   const { dict } = useI18n();
   const { openProject, activeProject } = useWindows();
@@ -78,8 +78,15 @@ export default function Dock() {
   return (
     <nav
       aria-label={dict.projects.dockLabel}
-      className="pointer-events-none fixed inset-x-0 bottom-3 z-40 flex justify-center px-3"
+      className="pointer-events-none fixed inset-x-0 bottom-3 z-40 flex flex-col items-center gap-1.5 px-3"
     >
+      {/* Without this label, visitors read the dock as decoration. */}
+      <p className="pointer-events-auto max-w-full truncate rounded-full bg-black/55 px-3 py-1 text-[11px] font-medium text-white/95 backdrop-blur-md">
+        <span className="font-semibold">{dict.projects.dockTitle}</span>
+        <span className="mx-1.5 opacity-50">·</span>
+        {dict.projects.dockHint}
+      </p>
+
       <div
         dir="ltr"
         onMouseMove={(e) => mouseX.set(e.clientX)}

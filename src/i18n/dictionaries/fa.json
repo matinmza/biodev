@@ -11,7 +11,9 @@
   "menu": {
     "os": "MatinOS",
     "themeToggle": "تغییر تم",
-    "langToggle": "Switch to English"
+    "langToggle": "زبان",
+    "english": "English",
+    "persian": "فارسی"
   },
   "profile": {
     "widgetTitle": "درباره من",
@@ -84,6 +86,8 @@
   "projects": {
     "widgetTitle": "پروژه‌ها",
     "dockLabel": "داک پروژه‌ها",
+    "dockTitle": "پروژه‌های من",
+    "dockHint": "روی هر اپ کلیک کن تا داستانش را بخوانی",
     "meta": {
       "role": "نقش",
       "period": "بازه",

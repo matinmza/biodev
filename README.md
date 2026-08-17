@@ -47,5 +47,17 @@ src/
   lib/               # terminal engine, datetime, cn
 ```
 
-Set `NEXT_PUBLIC_SITE_URL` in production so metadata, robots and the
-sitemap resolve to the real domain.
+## SEO
+
+Ready to publish: per-locale metadata, canonical + `hreflang` (incl.
+`x-default`), OpenGraph & Twitter cards with a generated 1200×630 image,
+`schema.org` JSON-LD (Person, WebSite, one CreativeWork per project),
+`robots.txt`, `sitemap.xml` with language alternates, web manifest and
+apple-touch-icon.
+
+**Before deploying**, set `NEXT_PUBLIC_SITE_URL` to the real domain —
+metadata, robots, sitemap and JSON-LD all derive from it.
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://your-domain.com npm run build
+```
