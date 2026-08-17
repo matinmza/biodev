@@ -1,9 +1,10 @@
-import type { Locale } from "@/types/i18n";
+import type { Locale } from "./config";
+import type { Dictionary } from "@/types/translation";
 
-const dictionaries = {
-  fa: () => import("./dictionaries/fa.json").then((module) => module.default),
-  en: () => import("./dictionaries/en.json").then((module) => module.default),
+const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
+  en: () => import("./dictionaries/en.json").then((m) => m.default),
+  fa: () => import("./dictionaries/fa.json").then((m) => m.default),
 };
 
-export const getDictionary = async (locale: Locale): Promise<any> =>
+export const getDictionary = (locale: Locale): Promise<Dictionary> =>
   dictionaries[locale]();

@@ -1,62 +1,41 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
 import { useTheme } from "next-themes";
-import { motion } from "framer-motion";
-import { IoSunny, IoMoon } from "react-icons/io5";
+import { motion, AnimatePresence } from "framer-motion";
+import { Moon, Sun } from "lucide-react";
+import { useI18n } from "@/i18n/i18n-provider";
+import { useMounted } from "@/hooks/use-mounted";
 
-const ThemeToggle = () => {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+/** Compact menu-bar theme switch. */
+export default function ThemeToggle() {
+  const { resolvedTheme, setTheme } = useTheme();
+  const { dict } = useI18n();
+  const mounted = useMounted();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  if (!mounted) return <div className="h-7 w-7" />;
 
-  if (!mounted) {
-    return null;
-  }
-
-  const handleThemeChange = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
+  const isDark = resolvedTheme === "dark";
 
   return (
-    <div className="relative flex items-center justify-center w-16 h-16 bg-white/30 dark:bg-black/30 backdrop-blur-xl rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] not-drag">
-      <motion.div
-        className="absolute inset-0 flex items-center justify-center"
-        animate={{
-          rotate: theme === "light" ? 0 : 180,
-        }}
-        transition={{ duration: 0.5 }}
-      >
-        <motion.button
-          onClick={handleThemeChange}
-          className="relative flex items-center justify-center w-12 h-12 rounded-full bg-white dark:bg-black shadow-lg"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+    <button
+      type="button"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      aria-label={dict.menu.themeToggle}
+      title={dict.menu.themeToggle}
+      className="flex h-7 w-7 items-center justify-center rounded-lg text-current transition-colors hover:bg-black/10 dark:hover:bg-white/10"
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={isDark ? "moon" : "sun"}
+          initial={{ rotate: -90, opacity: 0 }}
+          animate={{ rotate: 0, opacity: 1 }}
+          exit={{ rotate: 90, opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="flex"
         >
-          <motion.div
-            className="absolute"
-            animate={{
-              opacity: theme === "light" ? 1 : 0,
-            }}
-            transition={{ duration: 0.3 }}
-          >
-            <IoSunny className="w-6 h-6 text-orange-500" />
-          </motion.div>
-          <motion.div
-            className="absolute"
-            animate={{
-              opacity: theme === "dark" ? 1 : 0,
-            }}
-            transition={{ duration: 0.3 }}
-          >
-            <IoMoon className="w-6 h-6 text-indigo-500" />
-          </motion.div>
-        </motion.button>
-      </motion.div>
-    </div>
+          {isDark ? <Moon size={15} /> : <Sun size={15} />}
+        </motion.span>
+      </AnimatePresence>
+    </button>
   );
-};
-
-export default ThemeToggle;
+}

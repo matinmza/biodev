@@ -1,30 +1,189 @@
 {
-  "about": {
-    "title": "About Me",
-    "name": "Matin Zarif Amin",
-    "role": "Full Stack Developer",
-    "description": "Developer with over 6 years of experience in web development and programming",
-    "skills": {
-      "title": "Skills",
-      "frontend": "Frontend",
-      "backend": "Backend",
-      "ai": "Artificial Intelligence",
-      "tools": "Tools"
-    },
-    "experience": {
-      "title": "Experience",
-      "companies": {
-        "hayweb": "Hiweb",
-        "parsonline": "Pars Online",
-        "selfit": "Selfit"
-      }
-    },
-    "interests": {
-      "title": "Interests",
-      "team": "Team Work",
-      "leadership": "Team Leadership",
-      "challenges": "New Challenges",
-      "git": "Version Control"
+  "meta": {
+    "title": "Matin Zarifamin — Frontend Team Lead",
+    "description": "Portfolio of Matin Zarifamin: frontend team lead building AI-driven products, real-time dashboards and design systems with React & Next.js for 900K+ users.",
+    "keywords": "Matin Zarifamin, Frontend, React, Next.js, TypeScript, Team Lead, Tehran"
+  },
+  "boot": {
+    "tagline": "personal operating system",
+    "loading": "Starting up…"
+  },
+  "menu": {
+    "os": "MatinOS",
+    "themeToggle": "Switch theme",
+    "langToggle": "تغییر زبان به فارسی"
+  },
+  "profile": {
+    "widgetTitle": "About",
+    "name": "Matin Zarifamin",
+    "role": "Frontend Team Lead",
+    "tagline": "I build interfaces that feel instant.",
+    "summary": "Senior frontend engineer with 5+ years crafting AI-driven products, real-time dashboards and design systems. At Hiweb / Selfit I lead a 4-person frontend team, shipping React & Next.js experiences to 900K+ users — obsessed with Core Web Vitals and interfaces that feel alive.",
+    "location": "Tehran, Iran",
+    "availability": "Open to opportunities",
+    "cta": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "email": "Email"
     }
+  },
+  "stats": {
+    "widgetTitle": "Impact",
+    "items": {
+      "years": { "value": "5+", "label": "years of experience" },
+      "users": { "value": "900K+", "label": "users served" },
+      "components": { "value": "60+", "label": "design-system components" },
+      "lighthouse": { "value": "90+", "label": "Lighthouse on key journeys" }
+    }
+  },
+  "photos": {
+    "widgetTitle": "Photos",
+    "alt": "Portrait of Matin Zarifamin"
+  },
+  "clock": {
+    "widgetTitle": "Clock"
+  },
+  "terminal": {
+    "widgetTitle": "Terminal",
+    "hint": "This terminal is real — click it and type `help`."
+  },
+  "experience": {
+    "widgetTitle": "Experience",
+    "items": [
+      {
+        "company": "Hiweb / Selfit",
+        "role": "Frontend Team Lead",
+        "period": "2022 — Present",
+        "points": [
+          "Leading a 4-person frontend team across SaaS, PWA and AI products.",
+          "Cut bundle 4MB → 1MB; LCP p75 5.0s → 1.5s, INP 300ms → 120ms.",
+          "Built the design system: 60+ components with visual regression in CI.",
+          "Replaced WebSocket with SSE streaming for the AI chatbot — TTFT −67%."
+        ]
+      },
+      {
+        "company": "Satpay",
+        "role": "Frontend Engineer",
+        "period": "2020 — 2022",
+        "points": [
+          "Built real-time analytics dashboards in React & TypeScript.",
+          "Interactive time-series charts with server pagination and virtualization.",
+          "~95% on-time delivery, turning ambiguous specs into shipped features."
+        ]
+      }
+    ],
+    "education": {
+      "degree": "B.Sc. Computer Software Engineering",
+      "school": "Islamic Azad University",
+      "period": "2019 — 2023"
+    }
+  },
+  "stack": {
+    "widgetTitle": "Stack"
+  },
+  "projects": {
+    "widgetTitle": "Projects",
+    "dockLabel": "Projects dock",
+    "meta": {
+      "role": "Role",
+      "period": "Period",
+      "stack": "Stack",
+      "highlights": "Highlights",
+      "visit": "Visit project"
+    },
+    "roles": {
+      "lead": "Frontend Team Lead",
+      "engineer": "Frontend Engineer"
+    },
+    "items": {
+      "hiweb-ai": {
+        "name": "Hiweb AI Chatbot",
+        "tagline": "24/7 ISP smart support with live token streaming",
+        "description": "An AI support assistant for one of Iran's largest ISPs. I designed the streaming architecture end-to-end — replacing WebSocket with fetch/SSE streaming for real-time tokens from the LLM backend.",
+        "highlights": [
+          "p50 time-to-first-token 1.2s → 0.4s (−67%)",
+          "Chat completion rate +18%, lead→sale +6.5% on high-intent flows",
+          "Serving ~600K Hiweb users in production"
+        ]
+      },
+      "selfit-coach": {
+        "name": "Selfit AI Coach",
+        "tagline": "An embeddable fitness assistant that personalizes daily plans",
+        "description": "A framework-agnostic Web Component chatbot embedded across Selfit products. One build, every app — with standardized UI/UX and analytics baked in.",
+        "highlights": [
+          "Removed duplicate per-app builds — ~65% less engineering effort",
+          "Integration time cut ~70%: days → hours",
+          "Personalized daily workout & nutrition plans via LLM workflows"
+        ]
+      },
+      "selfit-app": {
+        "name": "Selfit Web App",
+        "tagline": "Corporate-welfare PWA used by ~300K employees",
+        "description": "The employee-facing PWA for Iran's leading corporate-welfare platform: booking sports venues, wallets, entitlements and more — installable, offline-friendly and fast on low-end devices.",
+        "highlights": [
+          "~300K active users with p75 Web Vitals kept healthy under peak load",
+          "RUM + Sentry observability with feature-flagged rollouts",
+          "Lighthouse 90+ on key journeys"
+        ]
+      },
+      "selfit-b2b": {
+        "name": "Selfit B2B Admin",
+        "tagline": "HR enrollment, budgets and analytics for organizations",
+        "description": "The admin panel HR teams use to manage enrollment, entitlements and budgets — heavy tables, exports and analytics dashboards built for daily operational work.",
+        "highlights": [
+          "Virtualized data grids with server pagination for large orgs",
+          "Interactive analytics: time-series charts, funnels and exports",
+          "Role-based access control across organization hierarchies"
+        ]
+      },
+      "seltrip": {
+        "name": "SELTrip",
+        "tagline": "Large-result travel search on the Next.js App Router",
+        "description": "Led the strategic migration from a legacy SPA to the Next.js App Router with RSC, SSR/ISR and edge caching — a travel search engine with huge result sets and low-latency filtering.",
+        "highlights": [
+          "LCP p75 1.6s vs 4.8s on the legacy SPA (−67%)",
+          "INP 120ms vs 320ms (−63%), CLS 0.04 vs 0.18",
+          "SEO uplift via server metadata, sitemaps and on-demand ISR"
+        ]
+      },
+      "esim": {
+        "name": "eSIM Commerce",
+        "tagline": "Buy and manage travel eSIMs — app and web",
+        "description": "End-to-end eSIM purchase and management flows for travelers: plan discovery, checkout, QR provisioning and usage tracking across web and app.",
+        "highlights": [
+          "Multi-step checkout tuned for conversion",
+          "Instant QR provisioning flow with live activation status",
+          "Shared design-system primitives across app and site"
+        ]
+      },
+      "farda-insurance": {
+        "name": "Farda Insurance",
+        "tagline": "Policy purchase & management, from quote to bind",
+        "description": "A digital insurance platform covering the full journey — quoting, binding, payments and a policy-management dashboard.",
+        "highlights": [
+          "Quote → bind flow with resumable multi-step forms",
+          "Policy dashboard with payments and renewals",
+          "Accessible form UX with robust validation"
+        ]
+      },
+      "prodoc": {
+        "name": "ProDoc",
+        "tagline": "Lightweight Next.js landing for a healthcare-AI product",
+        "description": "A fast, SEO-first marketing site for a healthcare/AI product — static-generated, minimal JS, maximal polish.",
+        "highlights": [
+          "Static generation with near-perfect Lighthouse scores",
+          "Motion design that stays out of the content's way",
+          "Shipped end-to-end in a tight timeline"
+        ]
+      }
+    }
+  },
+  "a11y": {
+    "close": "Close window",
+    "openProject": "Open project",
+    "dragHint": "Drag to rearrange"
+  },
+  "footer": {
+    "madeWith": "Designed & built by Matin Zarifamin"
   }
 }

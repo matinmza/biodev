@@ -1,49 +1,30 @@
 "use client";
-import React from "react";
-import { usePathname, useRouter } from "next/navigation";
-import Image from "next/image";
 
-const LanguageToggle = () => {
+import { usePathname, useRouter } from "next/navigation";
+import { useI18n } from "@/i18n/i18n-provider";
+
+/** Menu-bar language switch — swaps the locale segment of the URL. */
+export default function LanguageToggle() {
   const pathname = usePathname();
   const router = useRouter();
-  const isFa = pathname.includes("/fa");
+  const { dict, lang } = useI18n();
 
-  const handleLanguageChange = () => {
-    const newPath = isFa
-      ? pathname.replace("/fa", "/en")
-      : pathname.replace("/en", "/fa");
-    router.push(newPath);
+  const nextLang = lang === "fa" ? "en" : "fa";
+
+  const switchLanguage = () => {
+    const nextPath = pathname.replace(`/${lang}`, `/${nextLang}`);
+    router.push(nextPath);
   };
 
-  const renderButton = (
-    isCurrentLangFa: boolean,
-    imgSrc: string,
-    altText: string
-  ) => (
+  return (
     <button
-      onClick={handleLanguageChange}
-      className={`flex items-center justify-center cursor-pointer w-12 h-12 rounded-2xl transition-all duration-300 ${
-        isCurrentLangFa ? "bg-white/80 shadow-sm" : "hover:bg-white/40"
-      }`}
+      type="button"
+      onClick={switchLanguage}
+      aria-label={dict.menu.langToggle}
+      title={dict.menu.langToggle}
+      className="flex h-7 min-w-7 items-center justify-center rounded-lg px-1.5 text-xs font-semibold transition-colors hover:bg-black/10 dark:hover:bg-white/10"
     >
-      <div className="relative w-8 h-8">
-        <Image
-          src={imgSrc}
-          alt={altText}
-          fill
-          className="rounded-lg object-cover"
-          quality={100}
-        />
-      </div>
+      {lang === "fa" ? "EN" : "فا"}
     </button>
   );
-
-  return (
-    <div className="flex items-center gap-2 bg-white/30 backdrop-blur-xl rounded-2xl p-2 shadow-[0_8px_30px_rgb(0,0,0,0.12)] not-drag">
-      {renderButton(!isFa, "https://flagcdn.com/w80/gb.png", "English")}
-      {renderButton(isFa, "https://flagcdn.com/w80/ir.png", "فارسی")}
-    </div>
-  );
-};
-
-export default LanguageToggle;
+}
