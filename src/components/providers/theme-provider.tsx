@@ -23,23 +23,42 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-const systemPrefersDark = () =>
-  window.matchMedia("(prefers-color-scheme: dark)").matches;
+/**
+ * Dark after 19:00 and before 07:00, in the visitor's own timezone. This is
+ * what "system" resolves to: the desktop metaphor is the point of the site, so
+ * it should be lit like a desk — bright during the day, dim at night — rather
+ * than follow an OS switch most visitors never touched.
+ */
+const NIGHT_FROM = 19;
+const NIGHT_UNTIL = 7;
 
+const isNight = (at = new Date()) => {
+  const hour = at.getHours();
+  return hour >= NIGHT_FROM || hour < NIGHT_UNTIL;
+};
+
+// Storage can throw outright (Safari private mode, a blocked third-party
+// context) — and this runs inside a state initializer, so an uncaught throw
+// here takes the whole app down over a preference.
 const readStoredTheme = (): Theme => {
-  const stored = localStorage.getItem(STORAGE_KEY);
+  let stored: string | null = null;
+  try {
+    stored = localStorage.getItem(STORAGE_KEY);
+  } catch {
+    /* storage blocked — fall back to the clock */
+  }
   return stored === "light" || stored === "dark" || stored === "system"
     ? stored
     : "system";
 };
 
 const resolve = (theme: Theme): ResolvedTheme =>
-  theme === "system" ? (systemPrefersDark() ? "dark" : "light") : theme;
+  theme === "system" ? (isNight() ? "dark" : "light") : theme;
 
 /**
- * Class-based dark mode without next-themes. The pre-hydration state is
- * handled by /theme-init.js plus a CSS media-query fallback, so React
- * never has to render an inline <script>.
+ * Class-based dark mode without next-themes. The pre-hydration state is set
+ * by the blocking inline THEME_INIT script in the layout, which applies this
+ * same clock rule — so the first paint is already the right theme.
  */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(() =>
@@ -57,18 +76,25 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     classes.toggle("light", resolvedTheme === "light");
   }, [resolvedTheme]);
 
-  // Follow OS-level changes while in system mode.
+  // Re-check the clock when the tab comes back, so a page left open past
+  // sunset is lit correctly the next time it is actually looked at.
   useEffect(() => {
     if (theme !== "system") return;
-    const query = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = () =>
-      setResolvedTheme(query.matches ? "dark" : "light");
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
+    const onVisible = () => {
+      if (document.visibilityState === "visible") {
+        setResolvedTheme(isNight() ? "dark" : "light");
+      }
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
   }, [theme]);
 
   const setTheme = useCallback((next: Theme) => {
-    localStorage.setItem(STORAGE_KEY, next);
+    try {
+      localStorage.setItem(STORAGE_KEY, next);
+    } catch {
+      /* storage blocked — the choice just will not survive a reload */
+    }
     setThemeState(next);
     setResolvedTheme(resolve(next));
   }, []);

@@ -14,6 +14,7 @@ import {
   personJsonLd,
   serializeJsonLd,
 } from "@/lib/seo";
+import { THEME_INIT } from "@/lib/theme-init";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -118,8 +119,9 @@ export default async function RootLayout({ children, params }: Props) {
           lang === "fa" ? "font-iran-sans" : "font-sf-pro"
         )}
       >
-        {/* React 19 hoists async src scripts to <head> and executes them. */}
-        <script async src="/theme-init.js" />
+        {/* Inline and blocking on purpose: the theme follows the clock, which
+            CSS cannot read, so the rule has to run before the first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
         {/* Structured data — rendered on the server only, never re-executed. */}
         <script
           type="application/ld+json"

@@ -14,6 +14,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SHOTS_DIR = join(ROOT, "public", "images", "shots");
+const IMAGES_DIR = join(ROOT, "public", "images");
 const OUT = join(ROOT, "src", "data", "shots.generated.ts");
 
 /** PNG stores width and height as big-endian uint32 at bytes 16..24. */
@@ -26,7 +27,65 @@ function pngSize(file) {
   return { width: header.readUInt32BE(16), height: header.readUInt32BE(20) };
 }
 
+/**
+ * JPEG stores size inside a start-of-frame marker, so the file has to be
+ * walked segment by segment. Supported because hand-dropped screenshots are
+ * as often JPEG as PNG, and a shot the indexer cannot measure is a shot the
+ * gallery cannot lay out.
+ */
+function jpegSize(file) {
+  const fd = openSync(file, "r");
+  try {
+    const head = Buffer.alloc(2);
+    readSync(fd, head, 0, 2, 0);
+    if (head[0] !== 0xff || head[1] !== 0xd8) return null;
+
+    const marker = Buffer.alloc(4);
+    let offset = 2;
+    for (;;) {
+      if (readSync(fd, marker, 0, 4, offset) < 4) return null;
+      if (marker[0] !== 0xff) return null;
+      const kind = marker[1];
+      const length = marker.readUInt16BE(2);
+      // SOF0..SOF15, skipping the four that are not frame headers.
+      if (kind >= 0xc0 && kind <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(kind)) {
+        const frame = Buffer.alloc(5);
+        readSync(fd, frame, 0, 5, offset + 4);
+        return { width: frame.readUInt16BE(3), height: frame.readUInt16BE(1) };
+      }
+      offset += 2 + length;
+    }
+  } finally {
+    closeSync(fd);
+  }
+}
+
+/** Intrinsic size of a dropped-in image, or null if it cannot be read. */
+const imageSize = (file) =>
+  /\.jpe?g$/i.test(file) ? jpegSize(file) : pngSize(file);
+
 const collator = new Intl.Collator("en", { numeric: true });
+
+/**
+ * Optional wallpaper photos, same drop-in contract as the screenshots: put
+ * `wallpaper-light.jpg` (or .png/.webp/.avif/.heic-exported-to-jpg) next to the
+ * other images and the desktop uses it; leave it out and the CSS wallpaper
+ * stands in. Apple's own wallpapers are not redistributable, so none ships
+ * with the repository.
+ */
+function findWallpaper(theme) {
+  if (!existsSync(IMAGES_DIR)) return null;
+  const match = readdirSync(IMAGES_DIR)
+    .filter(
+      (name) =>
+        name.toLowerCase().startsWith(`wallpaper-${theme}.`) &&
+        /\.(jpe?g|png|webp|avif)$/i.test(name)
+    )
+    .sort(collator.compare)[0];
+  return match ? `/images/${match}` : null;
+}
+
+const wallpapers = { light: findWallpaper("light"), dark: findWallpaper("dark") };
 
 const entries = existsSync(SHOTS_DIR)
   ? readdirSync(SHOTS_DIR, { withFileTypes: true })
@@ -34,14 +93,12 @@ const entries = existsSync(SHOTS_DIR)
       .map((entry) => {
         const dir = join(SHOTS_DIR, entry.name);
         const shots = readdirSync(dir)
-          .filter((name) => /\.(png|jpe?g|webp)$/i.test(name))
+          .filter((name) => /\.(png|jpe?g)$/i.test(name))
           .sort(collator.compare)
           .map((name) => {
-            const size = name.toLowerCase().endsWith(".png")
-              ? pngSize(join(dir, name))
-              : null;
+            const size = imageSize(join(dir, name));
             if (!size) {
-              console.warn(`  skipped ${entry.name}/${name}: not a readable PNG`);
+              console.warn(`  skipped ${entry.name}/${name}: unreadable image`);
               return null;
             }
             return { src: `/images/shots/${entry.name}/${name}`, ...size };
@@ -71,6 +128,15 @@ import type { ProjectShot } from "./projects";
 export const shotsByProject: Record<string, ProjectShot[]> = {
 ${body}
 };
+
+/**
+ * Wallpaper photos, when they exist in public/images. \`null\` means the CSS
+ * wallpaper is used instead.
+ */
+export const wallpapers: Record<"light" | "dark", string | null> = {
+  light: ${wallpapers.light ? `"${wallpapers.light}"` : "null"},
+  dark: ${wallpapers.dark ? `"${wallpapers.dark}"` : "null"},
+};
 `,
   "utf8"
 );
@@ -79,5 +145,8 @@ console.log(
   `✓ ${OUT.replace(ROOT, ".")} — ${entries.length} project(s), ${entries.reduce(
     (total, [, shots]) => total + shots.length,
     0
-  )} image(s)`
+  )} image(s)` +
+    (wallpapers.light || wallpapers.dark
+      ? ` — wallpaper: light=${wallpapers.light ?? "css"}, dark=${wallpapers.dark ?? "css"}`
+      : " — wallpaper: CSS (drop public/images/wallpaper-light.jpg to override)")
 );

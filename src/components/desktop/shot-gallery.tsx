@@ -1,63 +1,83 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 import type { ProjectShot } from "@/data/projects";
 import { useI18n } from "@/i18n/i18n-provider";
+import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 
 /**
- * Shape class derived from the capture itself, so the grid adapts to whatever
- * sits in `public/images/shots/` without anyone tagging the files.
+ * How wide a row should be relative to its height. 2.4 puts two desktop
+ * frames or four phone frames on a line, which is how a case study is laid
+ * out by hand.
  */
-type Kind = "wide" | "phone" | "square";
+const ROW_RATIO = 2.4;
 
-const kindOf = ({ width, height }: ProjectShot): Kind => {
-  const ratio = width / height;
-  if (ratio > 1.25) return "wide";
-  if (ratio < 0.8) return "phone";
-  return "square";
-};
+/**
+ * Aspect ratio used for layout, clamped: the collage is built out of the
+ * captures' real proportions, but one freak image must not be able to flatten
+ * a whole row to a ribbon.
+ */
+const ratioOf = ({ width, height }: ProjectShot) =>
+  Math.min(Math.max(width / height, 0.5), 2.2);
 
-/** Static strings only — Tailwind has to see these class names to emit them. */
-const SPAN = {
-  hero: "col-span-6 md:col-span-12",
-  half: "col-span-6",
-  phone: "col-span-3",
-} as const;
-
-const FRAME = {
-  // Tall captures are cropped in the grid and shown whole in the lightbox, so
-  // a long landing page reads as a tidy card instead of a thin ribbon.
-  wide: "aspect-[16/10]",
-  phone: "aspect-[9/16]",
-  square: "aspect-[4/3]",
-} as const;
-
-interface Tile {
+export interface Tile {
   shot: ProjectShot;
-  kind: Kind;
-  span: keyof typeof SPAN;
+  /** Position in the original list, so the lightbox opens the right frame. */
+  index: number;
+  ratio: number;
+}
+
+export interface Row {
+  tiles: Tile[];
+  /** Sum of the tiles' ratios — the row's own aspect ratio. */
+  ratio: number;
 }
 
 /**
- * Lays the captures out from their own proportions: phones sit four-up, a lone
- * landscape capture becomes the hero, and an odd one out is promoted so no row
- * ends with a gap.
+ * Justified rows: fill a line until it is wide enough, then start the next.
+ * Tile widths are `ratio / row.ratio`, so every row fills the width exactly
+ * and every frame keeps its own proportions — no fixed grid to fight, and any
+ * number of captures at any size lays out.
+ *
+ * A final short row is not stretched: it keeps the height of a full row and
+ * ends early, the way a designer would leave the last print where it falls.
  */
-function plan(shots: ProjectShot[]): Tile[] {
-  const kinds = shots.map(kindOf);
-  const landscape = kinds.filter((kind) => kind !== "phone");
-  const heroAt = kinds.findIndex((kind) => kind !== "phone");
+export function rows(shots: ProjectShot[], target = ROW_RATIO): Row[] {
+  const out: Row[] = [];
+  let tiles: Tile[] = [];
+  let ratio = 0;
 
-  return shots.map((shot, index) => {
-    const kind = kinds[index];
-    if (kind === "phone") return { shot, kind, span: "phone" };
-    const hero = landscape.length % 2 === 1 && index === heroAt;
-    return { shot, kind, span: hero ? "hero" : "half" };
+  shots.forEach((shot, index) => {
+    const tileRatio = ratioOf(shot);
+    tiles.push({ shot, index, ratio: tileRatio });
+    ratio += tileRatio;
+    if (ratio >= target) {
+      out.push({ tiles, ratio });
+      tiles = [];
+      ratio = 0;
+    }
   });
+
+  if (tiles.length) out.push({ tiles, ratio: Math.max(ratio, target) });
+  return out;
 }
+
+/**
+ * Fixed tilts and vertical offsets, cycled by index. Deterministic on purpose:
+ * a random tilt would change on every render and on every rebuild.
+ */
+const TILT = ["-1.6deg", "1.2deg", "-0.8deg", "1.7deg", "-1.1deg"];
+const LIFT = ["9px", "-7px", "5px", "-9px", "7px"];
 
 export default function ShotGallery({
   shots,
@@ -67,8 +87,14 @@ export default function ShotGallery({
   title: string;
 }) {
   const { dict } = useI18n();
+  const mounted = useMounted();
   const [open, setOpen] = useState<number | null>(null);
-  const tiles = plan(shots);
+  const dialog = useRef<HTMLDivElement>(null);
+  const opener = useRef<HTMLButtonElement | null>(null);
+  const laid = rows(shots);
+  // A single frame tilted and overlapping nothing just looks crooked.
+  const collage = shots.length > 1;
+  const isOpen = open !== null;
 
   const step = useCallback(
     (delta: number) =>
@@ -78,100 +104,180 @@ export default function ShotGallery({
     [shots.length]
   );
 
-  // Arrow keys in the lightbox. Escape is the parent modal's job, and this
-  // listener stops once the lightbox closes.
+  const close = useCallback(() => {
+    setOpen(null);
+    opener.current?.focus();
+  }, []);
+
+  // Keyboard handling for the lightbox: navigation, dismissal, and a Tab loop
+  // so focus cannot wander into the project window behind the overlay.
   useEffect(() => {
-    if (open === null) return;
+    if (!isOpen) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "ArrowRight") step(1);
-      if (event.key === "ArrowLeft") step(-1);
-      if (event.key === "Escape") setOpen(null);
+      if (event.key === "Escape") {
+        // Capture phase and stopImmediatePropagation: the project window also
+        // closes on Escape, and one key press must not dismiss both.
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        close();
+        return;
+      }
+      if (event.key === "ArrowRight") return step(1);
+      if (event.key === "ArrowLeft") return step(-1);
+      if (event.key !== "Tab") return;
+
+      const stops = dialog.current?.querySelectorAll<HTMLElement>("button");
+      if (!stops?.length) return;
+      const first = stops[0];
+      const last = stops[stops.length - 1];
+      const inside = dialog.current?.contains(document.activeElement);
+      if (event.shiftKey && (!inside || document.activeElement === first)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (!inside || document.activeElement === last)) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, step]);
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
+  }, [isOpen, step, close]);
+
+  // Move focus in once, on open — not on every arrow press.
+  useEffect(() => {
+    if (!isOpen) return;
+    dialog.current?.querySelector<HTMLElement>("button")?.focus();
+  }, [isOpen]);
 
   const active = open === null ? null : shots[open];
 
   return (
     <div dir="ltr">
-      <div className="grid grid-cols-6 gap-2.5 md:grid-cols-12 md:gap-3">
-        {tiles.map(({ shot, kind, span }, index) => (
-          <button
-            key={shot.src}
-            type="button"
-            onClick={() => setOpen(index)}
-            aria-label={`${title} — ${dict.projects.meta.screens} ${index + 1}`}
-            className={cn(
-              "group relative overflow-hidden rounded-2xl border border-black/10 bg-zinc-100 shadow-sm outline-none transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-accent-cyan dark:border-white/10 dark:bg-zinc-800",
-              SPAN[span],
-              FRAME[kind]
-            )}
+      {/* `isolate` keeps the tiles' stacking order inside the collage. */}
+      <div className="isolate px-2 py-3">
+        {laid.map((row, rowIndex) => (
+          <div
+            key={rowIndex}
+            className="flex w-full items-stretch"
+            style={{
+              aspectRatio: row.ratio,
+              // Rows tuck into the one above so the corners overlap instead of
+              // sitting in a tidy grid.
+              marginTop: rowIndex === 0 ? undefined : "-1.4%",
+            }}
           >
-            <Image
-              src={shot.src}
-              alt={`${title} — ${dict.projects.meta.screens} ${index + 1}`}
-              fill
-              loading="lazy"
-              sizes="(max-width: 768px) 50vw, 420px"
-              // Top-anchored: a screenshot's first screen is the part worth
-              // seeing in a thumbnail.
-              className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
-            />
-            <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-            <span className="pointer-events-none absolute bottom-2.5 right-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-white/85 text-zinc-900 opacity-0 backdrop-blur transition-opacity duration-300 group-hover:opacity-100">
-              <Maximize2 size={13} />
-            </span>
-          </button>
+            {row.tiles.map((tile) => {
+              const cycle = tile.index % TILT.length;
+              return (
+                <button
+                  key={tile.shot.src}
+                  type="button"
+                  onClick={(event) => {
+                    // Remembered so closing the lightbox puts focus back on
+                    // the print the visitor opened.
+                    opener.current = event.currentTarget;
+                    setOpen(tile.index);
+                  }}
+                  aria-label={`${title} — ${dict.projects.meta.screens} ${tile.index + 1}`}
+                  style={
+                    {
+                      width: `${(tile.ratio / row.ratio) * 100}%`,
+                      "--tilt": collage ? TILT[cycle] : "0deg",
+                      "--lift": collage ? LIFT[cycle] : "0px",
+                      "--z": row.tiles.length - row.tiles.indexOf(tile),
+                    } as CSSProperties
+                  }
+                  className={cn(
+                    "group relative h-full shrink-0 overflow-hidden rounded-xl outline-none",
+                    // The white edge is what makes an overlap read as one print
+                    // lying on another rather than as a rendering glitch.
+                    "ring-2 ring-white shadow-[0_8px_24px_-8px_rgb(0_0_0/0.45)] dark:ring-zinc-900",
+                    "z-[var(--z)] translate-y-[var(--lift)] rotate-[var(--tilt)]",
+                    "transition-[transform,box-shadow] duration-300 ease-out",
+                    // Hover straightens the print and lifts it clear of the pile.
+                    "hover:z-50 hover:-translate-y-1 hover:rotate-0 hover:scale-[1.04] hover:shadow-2xl",
+                    "focus-visible:z-50 focus-visible:rotate-0 focus-visible:ring-4 focus-visible:ring-accent-cyan"
+                  )}
+                >
+                  <Image
+                    src={tile.shot.src}
+                    alt={`${title} — ${dict.projects.meta.screens} ${tile.index + 1}`}
+                    fill
+                    loading="lazy"
+                    sizes="(max-width: 768px) 45vw, 380px"
+                    // Top-anchored: a screenshot's first screen is the part
+                    // worth seeing in a thumbnail.
+                    className="object-cover object-top"
+                  />
+                  <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <span className="pointer-events-none absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-white/85 text-zinc-900 opacity-0 backdrop-blur transition-opacity duration-300 group-hover:opacity-100">
+                    <Maximize2 size={13} />
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         ))}
       </div>
 
-      {active && (
-        <div
-          className="fixed inset-0 z-[80] flex flex-col bg-black/85 backdrop-blur-md"
-          role="dialog"
-          aria-modal="true"
-          aria-label={title}
-        >
-          <div className="flex items-center justify-between px-4 py-3 text-white">
-            <span className="font-mono text-xs tabular-nums text-white/70">
-              {open! + 1} / {shots.length}
-            </span>
-            <button
-              type="button"
-              onClick={() => setOpen(null)}
-              aria-label={dict.a11y.close}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
-            >
-              <X size={18} />
-            </button>
-          </div>
-
+      {/* Portaled to <body>: the project window is a transformed, scrollable
+          panel, and a `fixed` child of a transformed ancestor is positioned
+          against that panel instead of the viewport — the overlay would be
+          sized to the card and then clipped by its overflow. */}
+      {mounted &&
+        active &&
+        createPortal(
           <div
-            className="relative flex min-h-0 flex-1 items-center justify-center px-3 pb-5"
-            // Click the backdrop to dismiss; the image itself stops the event.
-            onClick={() => setOpen(null)}
+            ref={dialog}
+            dir="ltr"
+            className="fixed inset-0 z-[120] flex flex-col bg-black/85 backdrop-blur-md"
+            role="dialog"
+            aria-modal="true"
+            aria-label={title}
           >
-            <Image
-              key={active.src}
-              src={active.src}
-              alt={`${title} — ${dict.projects.meta.screens}`}
-              width={active.width}
-              height={active.height}
-              sizes="90vw"
-              onClick={(event) => event.stopPropagation()}
-              className="max-h-full w-auto rounded-xl object-contain shadow-2xl"
-            />
+            <div className="flex items-center justify-between px-4 py-3 text-white">
+              <span className="font-mono text-xs tabular-nums text-white/70">
+                {open! + 1} / {shots.length}
+              </span>
+              <button
+                type="button"
+                onClick={close}
+                aria-label={dict.a11y.close}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+              >
+                <X size={18} />
+              </button>
+            </div>
 
-            {shots.length > 1 && (
-              <>
-                <GalleryNav side="left" label={dict.a11y.prev} onClick={() => step(-1)} />
-                <GalleryNav side="right" label={dict.a11y.next} onClick={() => step(1)} />
-              </>
-            )}
-          </div>
-        </div>
-      )}
+            <div
+              className="relative flex min-h-0 flex-1 items-center justify-center px-3 pb-5"
+              // Click the backdrop to dismiss; the image itself stops the event.
+              onClick={close}
+            >
+              <Image
+                key={active.src}
+                src={active.src}
+                alt={`${title} — ${dict.projects.meta.screens}`}
+                width={active.width}
+                height={active.height}
+                sizes="90vw"
+                onClick={(event) => event.stopPropagation()}
+                // `h-auto w-auto` with both maxima: a flex item's automatic
+                // minimum size is the image's intrinsic width, which would
+                // otherwise overflow a phone.
+                className="h-auto max-h-full w-auto max-w-full rounded-xl object-contain shadow-2xl"
+              />
+
+              {shots.length > 1 && (
+                <>
+                  <GalleryNav side="left" label={dict.a11y.prev} onClick={() => step(-1)} />
+                  <GalleryNav side="right" label={dict.a11y.next} onClick={() => step(1)} />
+                </>
+              )}
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

@@ -13,6 +13,7 @@
     "resume:pdf": "node scripts/shoot.mjs resume",
     "shots": "node scripts/shoot.mjs shots",
     "shots:index": "node scripts/index-shots.mjs",
+    "wallpapers": "node scripts/shoot.mjs wallpapers",
     "predev": "node scripts/index-shots.mjs",
     "prebuild": "node scripts/index-shots.mjs",
     "pretest": "node scripts/index-shots.mjs"

@@ -4,36 +4,70 @@ import type { ProjectShot } from "./projects";
 
 export const shotsByProject: Record<string, ProjectShot[]> = {
   "almas-dental": [
-    { src: "/images/shots/almas-dental/1.png", width: 1440, height: 3600 },
+    { src: "/images/shots/almas-dental/1.png", width: 1440, height: 900 },
+    { src: "/images/shots/almas-dental/2.png", width: 1440, height: 900 },
+    { src: "/images/shots/almas-dental/3.png", width: 1440, height: 900 },
+    { src: "/images/shots/almas-dental/4.png", width: 1440, height: 900 },
+    { src: "/images/shots/almas-dental/5.png", width: 1440, height: 900 },
   ],
   "farda-insurance": [
-    { src: "/images/shots/farda-insurance/1.png", width: 1440, height: 3600 },
+    { src: "/images/shots/farda-insurance/1.png", width: 1440, height: 900 },
+    { src: "/images/shots/farda-insurance/2.png", width: 1440, height: 900 },
+    { src: "/images/shots/farda-insurance/3.png", width: 1440, height: 900 },
+    { src: "/images/shots/farda-insurance/4.png", width: 1440, height: 900 },
+    { src: "/images/shots/farda-insurance/5.png", width: 1440, height: 900 },
   ],
   "hiweb-ai": [
     { src: "/images/shots/hiweb-ai/1.png", width: 560, height: 920 },
     { src: "/images/shots/hiweb-ai/2.png", width: 560, height: 920 },
+    { src: "/images/shots/hiweb-ai/3.png", width: 560, height: 920 },
   ],
   "parsonline-ai": [
     { src: "/images/shots/parsonline-ai/1.png", width: 560, height: 920 },
     { src: "/images/shots/parsonline-ai/2.png", width: 560, height: 920 },
+    { src: "/images/shots/parsonline-ai/3.png", width: 560, height: 920 },
   ],
   "rose-menu": [
-    { src: "/images/shots/rose-menu/1.png", width: 860, height: 7456 },
+    { src: "/images/shots/rose-menu/1.png", width: 860, height: 1864 },
+    { src: "/images/shots/rose-menu/2.png", width: 860, height: 1864 },
+    { src: "/images/shots/rose-menu/3.png", width: 860, height: 1864 },
+    { src: "/images/shots/rose-menu/4.png", width: 860, height: 1864 },
+    { src: "/images/shots/rose-menu/5.png", width: 860, height: 1864 },
   ],
   "selfit-app": [
-    { src: "/images/shots/selfit-app/1.png", width: 860, height: 3440 },
+    { src: "/images/shots/selfit-app/1.png", width: 860, height: 1864 },
     { src: "/images/shots/selfit-app/2.png", width: 860, height: 1864 },
+    { src: "/images/shots/selfit-app/3.png", width: 860, height: 1864 },
+    { src: "/images/shots/selfit-app/4.png", width: 860, height: 1864 },
+    { src: "/images/shots/selfit-app/5.png", width: 860, height: 1864 },
   ],
   "selfit-coach": [
     { src: "/images/shots/selfit-coach/1.png", width: 1440, height: 900 },
+    { src: "/images/shots/selfit-coach/2.png", width: 1440, height: 900 },
   ],
   "selfit-landing": [
-    { src: "/images/shots/selfit-landing/1.png", width: 1440, height: 3600 },
+    { src: "/images/shots/selfit-landing/1.png", width: 1440, height: 900 },
+    { src: "/images/shots/selfit-landing/2.png", width: 1440, height: 900 },
+    { src: "/images/shots/selfit-landing/3.png", width: 1440, height: 900 },
+    { src: "/images/shots/selfit-landing/4.png", width: 1440, height: 900 },
+    { src: "/images/shots/selfit-landing/5.png", width: 1440, height: 900 },
   ],
   "selfit-provider": [
     { src: "/images/shots/selfit-provider/1.png", width: 1440, height: 900 },
   ],
   "seltrip": [
-    { src: "/images/shots/seltrip/1.png", width: 1440, height: 2854 },
+    { src: "/images/shots/seltrip/1.png", width: 1440, height: 900 },
+    { src: "/images/shots/seltrip/2.png", width: 1440, height: 900 },
+    { src: "/images/shots/seltrip/3.png", width: 1440, height: 900 },
+    { src: "/images/shots/seltrip/4.png", width: 1440, height: 900 },
   ],
+};
+
+/**
+ * Wallpaper photos, when they exist in public/images. `null` means the CSS
+ * wallpaper is used instead.
+ */
+export const wallpapers: Record<"light" | "dark", string | null> = {
+  light: "/images/wallpaper-light.jpg",
+  dark: "/images/wallpaper-dark.jpg",
 };

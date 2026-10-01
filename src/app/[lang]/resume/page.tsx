@@ -3,7 +3,14 @@ import Link from "next/link";
 import { ArrowLeft, Download } from "lucide-react";
 import { i18n } from "@/i18n/config";
 import { resume } from "@/data/resume";
-import { RESUME_PDF } from "@/lib/seo";
+import {
+  NAME_VARIANTS,
+  RESUME_PAGE,
+  RESUME_PDF,
+  SITE_URL,
+  resumeJsonLd,
+  serializeJsonLd,
+} from "@/lib/seo";
 import ResumeDocument from "@/components/resume/resume-document";
 
 export async function generateStaticParams() {
@@ -11,9 +18,41 @@ export async function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: `${resume.name} — ${resume.title} · Résumé`,
   description: resume.summary.slice(0, 200),
-  alternates: { canonical: "/en/resume" },
+  keywords: NAME_VARIANTS.concat([
+    "resume",
+    "CV",
+    "Senior Frontend Engineer",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Tehran",
+  ]),
+  alternates: { canonical: RESUME_PAGE },
+  openGraph: {
+    type: "profile",
+    title: `${resume.name} — ${resume.title}`,
+    description: resume.summary.slice(0, 200),
+    url: `${SITE_URL}${RESUME_PAGE}`,
+    locale: "en_US",
+    // A route that declares its own `openGraph` does not inherit the
+    // parent segment's opengraph-image file, so name it here or the
+    // résumé shares as a bare link.
+    images: [`${SITE_URL}/${i18n.defaultLocale}/opengraph-image`],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${resume.name} — ${resume.title}`,
+    description: resume.summary.slice(0, 200),
+    images: [`${SITE_URL}/${i18n.defaultLocale}/opengraph-image`],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-snippet": -1 },
+  },
 };
 
 /**
@@ -29,6 +68,13 @@ export default async function ResumePage({
 
   return (
     <main className="min-h-screen bg-zinc-200 py-6 print:bg-white print:py-0">
+      <script
+        type="application/ld+json"
+        // Structured data, so the résumé and the home page resolve to one
+        // person rather than two unrelated pages.
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(resumeJsonLd()) }}
+      />
+
       {/* Screen-only controls — `.no-print` strips them from the PDF. */}
       <div className="no-print mx-auto mb-5 flex max-w-[820px] flex-wrap items-center justify-between gap-3 px-4">
         <Link

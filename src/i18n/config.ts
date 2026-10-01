@@ -10,10 +10,16 @@ export function isLocale(value: string): value is Locale {
 }
 
 /**
- * Pick the best locale for a visitor from an Accept-Language header.
- * Persian speakers get fa, everyone else the default (en).
+ * Pick the locale for a visitor. Where they are decides it: a request from
+ * Iran opens in Persian, everywhere else in English. The browser's
+ * Accept-Language header is only the fallback, for the case where the platform
+ * gave us no country (local development, a proxy that strips the header).
  */
-export function matchLocale(acceptLanguage: string | null): Locale {
+export function matchLocale(
+  acceptLanguage: string | null,
+  country?: string | null
+): Locale {
+  if (country) return country.toUpperCase() === "IR" ? "fa" : "en";
   if (acceptLanguage?.toLowerCase().includes("fa")) return "fa";
   return i18n.defaultLocale;
 }

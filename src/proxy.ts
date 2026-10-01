@@ -11,7 +11,13 @@ export function proxy(request: NextRequest) {
   );
   if (hasLocale) return;
 
-  const locale = matchLocale(request.headers.get("accept-language"));
+  // Vercel's geo header, with Cloudflare's as a fallback so the behaviour
+  // survives a move off Vercel. Both are set by the edge, not the client.
+  const country =
+    request.headers.get("x-vercel-ip-country") ??
+    request.headers.get("cf-ipcountry");
+
+  const locale = matchLocale(request.headers.get("accept-language"), country);
   return NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url));
 }
 

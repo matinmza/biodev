@@ -6,7 +6,7 @@
  * document a recruiter opens and the page they can link to never drift.
  */
 import { profile } from "./profile";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL } from "@/lib/site";
 
 export interface ResumeRole {
   company: string;
@@ -25,8 +25,18 @@ export interface ResumeProject {
   link?: string;
 }
 
-/** Last meaningful content change — printed on the PDF so it never looks stale. */
-export const RESUME_UPDATED = "October 2026";
+/**
+ * Last meaningful content change. Kept as a date so structured data can state
+ * it honestly — deriving it from `new Date()` would tell Google the résumé
+ * changed on every deploy.
+ */
+export const RESUME_UPDATED_ON = "2026-10-02";
+
+/** The same date, as printed on the PDF so it never looks stale. */
+export const RESUME_UPDATED = new Date(RESUME_UPDATED_ON).toLocaleDateString(
+  "en-US",
+  { month: "long", year: "numeric", timeZone: "UTC" }
+);
 
 export const resume = {
   name: `${profile.firstName} ${profile.lastName}`,
@@ -118,9 +128,10 @@ export const resume = {
       location: "Tehran",
       period: "2022 — Present",
       points: [
-        "Own frontend architecture across six products — an employee PWA, an HR admin panel, an AI assistant, travel search, eSIM commerce and marketing sites — on a shared monorepo and design system.",
+        "Own frontend architecture across seven products — an employee PWA, an HR admin panel, a partner-venue console, AI assistants, travel search, eSIM commerce and marketing sites — on a shared monorepo and design system.",
         "Cut the main bundle 4 MB → 1 MB and moved the 300K-user PWA from LCP p75 5.0s → 1.5s and INP 300ms → 120ms, then held those budgets through peak load with RUM and Sentry.",
         "Designed the AI assistant's streaming layer, replacing WebSocket with fetch/SSE token streaming: p50 time-to-first-token 1.2s → 0.4s (−67%), chat completion rate +18%, serving ~600K ISP subscribers.",
+        "Generalized that stack into a multi-tenant chat runtime and took a second ISP, ParsOnline, live on it as configuration rather than a rebuild — branding, knowledge base and intents are per-tenant, with sessions that survive a dropped connection.",
         "Shipped a framework-agnostic Web Component chatbot embedded across every Selfit product — one build for all apps, cutting integration from days to hours (~70%) and removing duplicate per-app work (~65% less engineering effort).",
         "Drove the migration of SELTrip's travel search from a legacy SPA to the Next.js App Router with RSC, ISR and edge caching: LCP p75 4.8s → 1.6s, INP 320ms → 120ms, CLS 0.18 → 0.04.",
         "Built and maintain the design system: 60+ accessible, RTL-first components with visual-regression gates in CI.",
@@ -151,6 +162,13 @@ export const resume = {
       name: "Hiweb AI Assistant",
       summary:
         "24/7 LLM support assistant for ~600K ISP subscribers. End-to-end SSE streaming architecture; −67% time-to-first-token, +6.5% lead→sale on high-intent flows.",
+      link: "https://chatbot.hiweb.ir",
+    },
+    {
+      name: "ParsOnline AI Assistant",
+      summary:
+        "The same streaming runtime serving a second ISP, grounded in its own support corpus — a tenant configuration, not a second codebase.",
+      link: "https://chatbot.parsonline.com",
     },
     {
       name: "SELTrip — travel search",
@@ -161,6 +179,22 @@ export const resume = {
       name: "Selfit B2B Admin",
       summary:
         "Operational HR panel: virtualized data grids over server pagination, analytics dashboards, exports and role-based access across organization hierarchies.",
+    },
+    {
+      name: "Selfit Provider Panel",
+      summary:
+        "Self-service console for partner gyms, pools and clinics: OTP-only sign-in, role-scoped data, and a scan-to-redeem flow that settles a booking at a busy reception desk in seconds.",
+    },
+    {
+      name: "Freelance — Rose Café Menu, Almas Dental, ProDoc",
+      summary:
+        "Phone-first Persian products shipped end to end on my own: an animated QR menu with its own admin panel, and statically generated clinic and healthcare-AI sites built around structured data and local search.",
+    },
+    {
+      name: "Farda Insurance (2021 — 2022)",
+      summary:
+        "Digital insurance platform: resumable quote→bind forms, payments, and a policy dashboard for renewals — accessible form UX with heavy validation.",
+      link: "https://www.fardains.ir",
     },
     {
       name: "MatinOS — this portfolio",

@@ -2,7 +2,7 @@
   "meta": {
     "title": "Matin Zarifamin — Senior Frontend Engineer",
     "description": "Portfolio of Matin Zarifamin: senior frontend engineer building AI-driven products, real-time dashboards and design systems with React & Next.js for 900K+ users.",
-    "keywords": "Matin Zarifamin, Senior Frontend Engineer, Frontend, React, Next.js, TypeScript, Tehran"
+    "keywords": "Matin Zarifamin, Matin Zarif Amin, متین ظریف‌امین, Senior Frontend Engineer, Frontend Engineer Tehran, React Developer Iran, Next.js Developer, TypeScript, Design Systems, Core Web Vitals, PWA, Frontend Architect, resume, CV, portfolio"
   },
   "boot": {
     "tagline": "personal operating system",
@@ -20,7 +20,7 @@
     "name": "Matin Zarifamin",
     "role": "Senior Frontend Engineer",
     "tagline": "I build interfaces that feel instant.",
-    "summary": "Senior frontend engineer with 6+ years crafting AI-driven products, real-time dashboards and design systems. At Hiweb / Selfit I own frontend architecture across six products shipping to 900K+ users, and mentor the three engineers who build them — obsessed with Core Web Vitals and interfaces that feel alive.",
+    "summary": "Senior frontend engineer with 6+ years crafting AI-driven products, real-time dashboards and design systems. At Hiweb / Selfit I own frontend architecture across seven products shipping to 900K+ users, and mentor the three engineers who build them — obsessed with Core Web Vitals and interfaces that feel alive.",
     "location": "Tehran, Iran",
     "availability": "Open to opportunities",
     "cta": {
@@ -69,7 +69,7 @@
         "role": "Senior Frontend Engineer",
         "period": "2022 — Present",
         "points": [
-          "Own frontend architecture across six SaaS, PWA and AI products.",
+          "Own frontend architecture across seven SaaS, PWA and AI products.",
           "Cut bundle 4MB → 1MB; LCP p75 5.0s → 1.5s, INP 300ms → 120ms.",
           "Built the design system: 60+ components with visual regression in CI.",
           "Replaced WebSocket with SSE streaming for the AI chatbot — TTFT −67%.",

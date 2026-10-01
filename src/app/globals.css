@@ -18,14 +18,6 @@
   color-scheme: light;
 }
 
-/* Pre-hydration fallback: match the OS theme until theme-init.js runs. */
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --desktop-ground: #0a0b10;
-    color-scheme: dark;
-  }
-}
-
 .dark {
   --desktop-ground: #0a0b10;
   color-scheme: dark;
@@ -214,6 +206,14 @@ body {
   @page {
     size: A4;
     margin: 11mm 12mm;
+  }
+
+  /* At night the OS theme is dark, and a dark `color-scheme` makes Chrome
+     paint the paper #121212 behind everything — the printed sheet came out
+     framed in black bands. Paper is light, whatever time it is. */
+  :root,
+  :root.dark {
+    color-scheme: light !important;
   }
 
   html,

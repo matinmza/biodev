@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { render } from "@testing-library/react";
@@ -21,13 +21,45 @@ describe("<ThemeProvider />", () => {
     document.documentElement.classList.remove("dark", "light");
   });
 
-  it("resolves to light by default (matchMedia stub is light)", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  /** Freezes the local clock at `hour` on a fixed day. */
+  const atHour = (hour: number) => {
+    vi.useFakeTimers();
+    const at = new Date(2026, 0, 15, hour, 30);
+    vi.setSystemTime(at);
+  };
+
+  it("opens light during the day", () => {
+    atHour(13);
     render(
       <ThemeProvider>
         <Probe />
       </ThemeProvider>
     );
     expect(screen.getByTestId("resolved")).toHaveTextContent("light");
+  });
+
+  it("opens dark at night", () => {
+    atHour(22);
+    render(
+      <ThemeProvider>
+        <Probe />
+      </ThemeProvider>
+    );
+    expect(screen.getByTestId("resolved")).toHaveTextContent("dark");
+  });
+
+  it("opens dark before dawn", () => {
+    atHour(5);
+    render(
+      <ThemeProvider>
+        <Probe />
+      </ThemeProvider>
+    );
+    expect(screen.getByTestId("resolved")).toHaveTextContent("dark");
   });
 
   it("applies the dark class and persists the choice", async () => {

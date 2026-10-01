@@ -1,11 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useI18n } from "@/i18n/i18n-provider";
 import BoltLogo from "./bolt-logo";
 
 const BOOT_KEY = "matinos-booted";
+
+/** Nothing mutates this outside our own render, so there is nothing to subscribe to. */
+const noSubscribe = () => () => {};
+const hasBooted = () => {
+  try {
+    return sessionStorage.getItem(BOOT_KEY) !== null;
+  } catch {
+    return true; // storage blocked — just skip the splash
+  }
+};
 
 /**
  * OS-style boot splash, shown once per browser session.
@@ -14,14 +24,21 @@ const BOOT_KEY = "matinos-booted";
 export default function BootScreen() {
   const { dict } = useI18n();
   const reducedMotion = useReducedMotion();
-  const [booting, setBooting] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return sessionStorage.getItem(BOOT_KEY) === null;
-  });
+  // The server has no sessionStorage, so it always renders "already booted"
+  // and the client agrees on the hydrating render — reading storage while
+  // choosing the first render is what makes the two disagree, and React
+  // throws out the whole tree when they do.
+  const booted = useSyncExternalStore(noSubscribe, hasBooted, () => true);
+  const [dismissed, setDismissed] = useState(false);
+  const booting = !booted && !dismissed;
 
   const finish = () => {
-    sessionStorage.setItem(BOOT_KEY, "1");
-    setBooting(false);
+    try {
+      sessionStorage.setItem(BOOT_KEY, "1");
+    } catch {
+      /* storage blocked — the splash simply shows again next time */
+    }
+    setDismissed(true);
   };
 
   return (
