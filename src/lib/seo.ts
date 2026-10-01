@@ -7,6 +7,12 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://matinzarifamin.dev"
 ).replace(/\/$/, "");
 
+/** The résumé page. English only, so the locale is hard-coded. */
+export const RESUME_PAGE = "/en/resume";
+
+/** The downloadable résumé, printed from `RESUME_PAGE` into `public/`. */
+export const RESUME_PDF = "/matin-zarifamin.pdf";
+
 /** BCP-47 tag for a locale, used in metadata and JSON-LD. */
 export const ogLocale = (lang: Locale) => (lang === "fa" ? "fa_IR" : "en_US");
 

@@ -206,6 +206,39 @@ body {
   }
 }
 
+/* ---------- Print (résumé) ---------- */
+
+/* `npm run resume:pdf` prints /en/resume headlessly, so these rules decide
+   what the PDF a recruiter opens actually looks like. */
+@media print {
+  @page {
+    size: A4;
+    margin: 11mm 12mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    overflow: visible;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  /* Keep the faint rules and bullet dots that browsers drop by default. */
+  .resume-sheet {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* On paper a URL is text, not a link — the underline just adds noise. */
+  .resume-sheet a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
 /* ---------- Scrollbars ---------- */
 
 .scrollbar-ios {
@@ -233,4 +266,56 @@ body {
 
 .dark .scrollbar-ios::-webkit-scrollbar-thumb {
   background-color: rgb(255 255 255 / 0.25);
+}
+
+/* ---------- Wallpaper ---------- */
+
+/*
+ * The iOS 26/27 look — a handful of very large, very soft colour blooms over a
+ * tinted ground — painted in CSS rather than shipped as a photo. A 3 MB JPEG
+ * was the page's largest-contentful paint; these gradients cost no bytes, so
+ * the first paint is immediate and nothing shifts while an image decodes.
+ */
+.wallpaper {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.wallpaper-light {
+  background-color: #e8e4f3;
+  background-image:
+    radial-gradient(70% 55% at 12% 8%, #ffd9c2 0%, transparent 62%),
+    radial-gradient(60% 50% at 88% 6%, #c8e7ff 0%, transparent 60%),
+    radial-gradient(75% 60% at 78% 88%, #e2c9ff 0%, transparent 64%),
+    radial-gradient(55% 45% at 22% 92%, #c9f3e4 0%, transparent 60%),
+    linear-gradient(165deg, #fdf6ef 0%, #ece6f7 52%, #dfe6f5 100%);
+}
+
+.wallpaper-dark {
+  background-color: #07070d;
+  background-image:
+    radial-gradient(65% 50% at 15% 10%, rgb(94 46 158 / 0.85) 0%, transparent 62%),
+    radial-gradient(55% 45% at 85% 8%, rgb(12 104 160 / 0.8) 0%, transparent 60%),
+    radial-gradient(70% 55% at 80% 90%, rgb(132 38 122 / 0.7) 0%, transparent 64%),
+    radial-gradient(50% 40% at 18% 88%, rgb(16 96 110 / 0.7) 0%, transparent 60%),
+    linear-gradient(165deg, #121223 0%, #0a0a14 55%, #06060c 100%);
+}
+
+/*
+ * Fine dither over the blooms. Flat CSS gradients band on wide screens; a
+ * sub-pixel noise layer breaks the bands the way a real photo's grain does.
+ */
+.wallpaper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.dark .wallpaper::after {
+  opacity: 0.05;
 }

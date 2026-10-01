@@ -1,5 +1,6 @@
 import { PROJECT_IDS, projects, type ProjectId } from "@/data/projects";
 import { profile, stack } from "@/data/profile";
+import { RESUME_PAGE, RESUME_PDF } from "@/lib/seo";
 import en from "@/i18n/dictionaries/en.json";
 
 /**
@@ -23,6 +24,7 @@ const HELP: string[] = [
   "  open <id>     open a project window, e.g. `open seltrip`",
   "  skills        tech I work with",
   "  experience    where I've worked",
+  "  resume        open my résumé (English, PDF available)",
   "  contact       how to reach me",
   "  github        open my GitHub profile",
   "  linkedin      open my LinkedIn profile",
@@ -50,9 +52,10 @@ export function runCommand(input: string): TerminalResult {
     case "whoami":
       return out(
         "Matin Zarifamin — Senior Frontend Engineer @ Hiweb / Selfit",
-        "5+ years building AI-driven products, real-time dashboards",
+        "6+ years building AI-driven products, real-time dashboards",
         "and design systems for 900K+ users. Tehran, Iran.",
-        "Leading a 4-person frontend team. Obsessed with Web Vitals."
+        "Owns frontend architecture, mentors three engineers.",
+        "Obsessed with Web Vitals. Type `resume` for the full CV."
       );
 
     case "projects":
@@ -92,10 +95,18 @@ export function runCommand(input: string): TerminalResult {
     case "exp":
       return out(
         "2022 — now   Senior Frontend Engineer @ Hiweb / Selfit",
-        "             4-person team · design system · AI products",
+        "             frontend architecture · design system · AI products",
         "2020 — 2022  Frontend Engineer @ Satpay",
         "             real-time analytics dashboards"
       );
+
+    case "resume":
+    case "cv":
+      return {
+        type: "open-url",
+        url: RESUME_PAGE,
+        lines: [`Opening ${RESUME_PAGE} …`, `PDF: ${RESUME_PDF}`],
+      };
 
     case "contact":
       return out(

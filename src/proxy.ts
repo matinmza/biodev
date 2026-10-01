@@ -16,8 +16,8 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Everything that is not a page: assets, metadata routes, generated icons.
-  matcher: [
-    "/((?!api|_next|images|favicon.ico|icon.svg|apple-icon|opengraph-image|theme-init.js|robots.txt|sitemap.xml|manifest.webmanifest).*)",
-  ],
+  // Pages only. Anything with a file extension is a real file in `public/`
+  // (the résumé PDF, icons, the manifest) or a metadata route — redirecting
+  // those under a locale prefix would 404 them.
+  matcher: ["/((?!api|_next|images|.*\\.).*)"],
 };

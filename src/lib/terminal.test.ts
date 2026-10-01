@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { runCommand } from "./terminal";
 import { PROJECT_IDS } from "@/data/projects";
 import { profile } from "@/data/profile";
+import { RESUME_PAGE } from "@/lib/seo";
 
 describe("terminal command engine", () => {
   it("returns help text for `help`", () => {
@@ -28,7 +29,15 @@ describe("terminal command engine", () => {
     const text = result.lines.join(" ");
     expect(text).toContain("Matin Zarifamin");
     expect(text).toContain("Senior Frontend Engineer");
-    expect(text).toContain("4-person");
+    expect(text).toContain("mentors three engineers");
+  });
+
+  it("opens the résumé page on `resume` and `cv`", () => {
+    expect(runCommand("resume")).toMatchObject({
+      type: "open-url",
+      url: RESUME_PAGE,
+    });
+    expect(runCommand("cv")).toMatchObject({ type: "open-url", url: RESUME_PAGE });
   });
 
   it("lists every project id in `projects`", () => {

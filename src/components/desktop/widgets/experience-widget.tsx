@@ -50,11 +50,29 @@ export default function ExperienceWidget() {
         ))}
       </ol>
 
-      <div className="mt-4 flex items-center gap-2 border-t border-black/5 pt-3 text-xs text-zinc-700 dark:border-white/10 dark:text-zinc-300">
-        <GraduationCap size={14} className="shrink-0" />
-        <span>
-          {education.degree} · {education.school} · {education.period}
-        </span>
+      {/* Stacked, not one middle-dot run: at widget width that line wrapped
+          into an unreadable jumble. */}
+      <div className="mt-4 flex items-start gap-2 border-t border-black/5 pt-3 dark:border-white/10">
+        <GraduationCap
+          size={14}
+          className="mt-0.5 shrink-0 text-zinc-600 dark:text-zinc-300"
+        />
+        <div className="min-w-0">
+          <p className="text-xs font-semibold leading-5 text-zinc-900 dark:text-white">
+            {education.degree}
+          </p>
+          <p className="text-[11px] leading-5 text-zinc-600 dark:text-zinc-300">
+            {education.school}
+            <span
+              className={cn(
+                "ms-1.5 tabular-nums",
+                lang === "fa" ? "font-iran-sans" : "font-mono"
+              )}
+            >
+              {education.period}
+            </span>
+          </p>
+        </div>
       </div>
     </WidgetShell>
   );

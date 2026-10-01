@@ -1,12 +1,17 @@
 import {
   BarChart3,
   Bot,
+  Coffee,
   Dumbbell,
   Globe,
+  MessagesSquare,
   Plane,
+  Presentation,
   ShieldCheck,
   Smartphone,
+  Smile,
   Stethoscope,
+  Store,
   type LucideIcon,
 } from "lucide-react";
 import { getProject, type ProjectId } from "@/data/projects";
@@ -16,9 +21,14 @@ const ICONS: Record<ProjectId, LucideIcon> = {
   "hiweb-ai": Bot,
   "selfit-coach": Dumbbell,
   "selfit-app": Smartphone,
+  "selfit-landing": Presentation,
   "selfit-b2b": BarChart3,
+  "selfit-provider": Store,
   seltrip: Plane,
+  "parsonline-ai": MessagesSquare,
   esim: Globe,
+  "rose-menu": Coffee,
+  "almas-dental": Smile,
   "farda-insurance": ShieldCheck,
   prodoc: Stethoscope,
 };

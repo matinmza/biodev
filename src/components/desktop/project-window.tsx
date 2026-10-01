@@ -3,9 +3,11 @@
 import { ArrowUpRight } from "lucide-react";
 import Modal from "@/components/shared/modal";
 import { getProject, type ProjectId } from "@/data/projects";
+import { shotsByProject } from "@/data/shots.generated";
 import { useI18n } from "@/i18n/i18n-provider";
 import { localizeDigits } from "@/lib/datetime";
 import AppIcon from "./app-icon";
+import ShotGallery from "./shot-gallery";
 
 interface ProjectWindowProps {
   projectId: ProjectId | null;
@@ -18,6 +20,8 @@ export default function ProjectWindow({ projectId, onClose }: ProjectWindowProps
 
   const project = projectId ? getProject(projectId) : null;
   const text = projectId ? dict.projects.items[projectId] : null;
+  // Indexed from public/images/shots at build time, so adding a file is enough.
+  const shots = projectId ? (shotsByProject[projectId] ?? []) : [];
 
   return (
     <Modal isOpen={projectId !== null} onClose={onClose}>
@@ -70,6 +74,13 @@ export default function ProjectWindow({ projectId, onClose }: ProjectWindowProps
             <p className="text-sm leading-7 text-zinc-700 dark:text-zinc-300">
               {text.description}
             </p>
+
+            {shots.length > 0 && (
+              <div>
+                <h3 className="widget-title mb-2.5">{dict.projects.meta.screens}</h3>
+                <ShotGallery shots={shots} title={text.name} />
+              </div>
+            )}
 
             <div>
               <h3 className="widget-title mb-2">{dict.projects.meta.highlights}</h3>

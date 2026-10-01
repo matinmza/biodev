@@ -1,6 +1,6 @@
 "use client";
 
-import type { Layouts } from "react-grid-layout";
+import type { ResponsiveLayouts } from "react-grid-layout/legacy";
 import { useI18n } from "@/i18n/i18n-provider";
 import { WindowProvider } from "./window-context";
 import MenuBar from "./menu-bar";
@@ -13,6 +13,7 @@ import StatsWidget from "./widgets/stats-widget";
 import TerminalWidget from "./widgets/terminal-widget";
 import ExperienceWidget from "./widgets/experience-widget";
 import StackWidget from "./widgets/stack-widget";
+import ResumeWidget from "./widgets/resume-widget";
 
 /** Grid positions per breakpoint. Keys must match the entries below. */
 const LAYOUT_LG = [
@@ -20,9 +21,10 @@ const LAYOUT_LG = [
   { i: "clock", x: 2, y: 0, w: 1, h: 2 },
   { i: "photos", x: 3, y: 0, w: 1, h: 2 },
   { i: "stats", x: 2, y: 2, w: 2, h: 1 },
-  { i: "terminal", x: 0, y: 3, w: 2, h: 3 },
-  { i: "experience", x: 2, y: 3, w: 2, h: 3 },
-  { i: "stack", x: 0, y: 6, w: 4, h: 1 },
+  { i: "resume", x: 0, y: 3, w: 2, h: 2 },
+  { i: "experience", x: 2, y: 3, w: 2, h: 5 },
+  { i: "terminal", x: 0, y: 5, w: 2, h: 3 },
+  { i: "stack", x: 0, y: 8, w: 4, h: 1 },
 ];
 
 const LAYOUT_SM = [
@@ -30,9 +32,10 @@ const LAYOUT_SM = [
   { i: "clock", x: 0, y: 3, w: 1, h: 2 },
   { i: "photos", x: 1, y: 3, w: 1, h: 2 },
   { i: "stats", x: 0, y: 5, w: 2, h: 1 },
-  { i: "terminal", x: 0, y: 6, w: 2, h: 3 },
-  { i: "experience", x: 0, y: 9, w: 2, h: 3 },
-  { i: "stack", x: 0, y: 12, w: 2, h: 1 },
+  { i: "resume", x: 0, y: 6, w: 2, h: 2 },
+  { i: "terminal", x: 0, y: 8, w: 2, h: 3 },
+  { i: "experience", x: 0, y: 11, w: 2, h: 4 },
+  { i: "stack", x: 0, y: 15, w: 2, h: 1 },
 ];
 
 const LAYOUT_XXS = [
@@ -40,12 +43,13 @@ const LAYOUT_XXS = [
   { i: "clock", x: 0, y: 4, w: 1, h: 2 },
   { i: "photos", x: 0, y: 6, w: 1, h: 3 },
   { i: "stats", x: 0, y: 9, w: 1, h: 2 },
-  { i: "terminal", x: 0, y: 11, w: 1, h: 3 },
-  { i: "experience", x: 0, y: 14, w: 1, h: 4 },
-  { i: "stack", x: 0, y: 18, w: 1, h: 1 },
+  { i: "resume", x: 0, y: 11, w: 1, h: 2 },
+  { i: "terminal", x: 0, y: 13, w: 1, h: 3 },
+  { i: "experience", x: 0, y: 16, w: 1, h: 4 },
+  { i: "stack", x: 0, y: 20, w: 1, h: 1 },
 ];
 
-const LAYOUTS: Layouts = {
+const LAYOUTS: ResponsiveLayouts = {
   lg: LAYOUT_LG,
   md: LAYOUT_LG,
   sm: LAYOUT_SM,
@@ -58,6 +62,7 @@ const ENTRIES: GridEntry[] = [
   { key: "clock", node: <ClockWidget /> },
   { key: "photos", node: <PhotoWidget /> },
   { key: "stats", node: <StatsWidget /> },
+  { key: "resume", node: <ResumeWidget /> },
   { key: "terminal", node: <TerminalWidget /> },
   { key: "experience", node: <ExperienceWidget /> },
   { key: "stack", node: <StackWidget /> },

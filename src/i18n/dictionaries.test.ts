@@ -36,9 +36,13 @@ describe("i18n dictionaries", () => {
     expect(emptiness).toBe(false);
   });
 
-  it("keeps the 4-person team claim consistent", () => {
-    expect(en.profile.summary).toContain("4-person");
-    expect(fa.profile.summary).toContain("۴ نفره");
+  // Matin applies for senior IC roles, so the summary must read as
+  // architecture ownership plus mentoring — never as running a team.
+  it("frames seniority as ownership and mentorship, not people-leadership", () => {
+    expect(en.profile.summary).toContain("mentor");
+    expect(fa.profile.summary).toContain("منتور");
+    expect(en.profile.summary).not.toMatch(/\blead(s|ing)?\b/i);
+    expect(fa.profile.summary).not.toContain("رهبری");
   });
 
   it("titles Matin as a senior frontend engineer, not a team lead", () => {

@@ -1,6 +1,12 @@
 "use client";
 
-import { Responsive, WidthProvider, type Layouts } from "react-grid-layout";
+// v2 moved the width-measuring HOC and the legacy prop shapes behind this
+// entry point; the root export is the new hook-based API.
+import {
+  Responsive,
+  WidthProvider,
+  type ResponsiveLayouts,
+} from "react-grid-layout/legacy";
 import { useMounted } from "@/hooks/use-mounted";
 import "react-grid-layout/css/styles.css";
 
@@ -12,7 +18,7 @@ export interface GridEntry {
 }
 
 interface DesktopGridProps {
-  layouts: Layouts;
+  layouts: ResponsiveLayouts;
   entries: GridEntry[];
 }
 

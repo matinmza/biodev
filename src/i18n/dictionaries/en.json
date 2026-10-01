@@ -20,7 +20,7 @@
     "name": "Matin Zarifamin",
     "role": "Senior Frontend Engineer",
     "tagline": "I build interfaces that feel instant.",
-    "summary": "Senior frontend engineer with 5+ years crafting AI-driven products, real-time dashboards and design systems. At Hiweb / Selfit I lead a 4-person frontend team, shipping React & Next.js experiences to 900K+ users — obsessed with Core Web Vitals and interfaces that feel alive.",
+    "summary": "Senior frontend engineer with 6+ years crafting AI-driven products, real-time dashboards and design systems. At Hiweb / Selfit I own frontend architecture across six products shipping to 900K+ users, and mentor the three engineers who build them — obsessed with Core Web Vitals and interfaces that feel alive.",
     "location": "Tehran, Iran",
     "availability": "Open to opportunities",
     "cta": {
@@ -32,10 +32,22 @@
   "stats": {
     "widgetTitle": "Impact",
     "items": {
-      "years": { "value": "5+", "label": "years of experience" },
-      "users": { "value": "900K+", "label": "users served" },
-      "components": { "value": "60+", "label": "design-system components" },
-      "lighthouse": { "value": "90+", "label": "Lighthouse on key journeys" }
+      "years": {
+        "value": "6+",
+        "label": "years of experience"
+      },
+      "users": {
+        "value": "900K+",
+        "label": "users served"
+      },
+      "components": {
+        "value": "60+",
+        "label": "design-system components"
+      },
+      "lighthouse": {
+        "value": "90+",
+        "label": "Lighthouse on key journeys"
+      }
     }
   },
   "photos": {
@@ -57,10 +69,12 @@
         "role": "Senior Frontend Engineer",
         "period": "2022 — Present",
         "points": [
-          "Leading a 4-person frontend team across SaaS, PWA and AI products.",
+          "Own frontend architecture across six SaaS, PWA and AI products.",
           "Cut bundle 4MB → 1MB; LCP p75 5.0s → 1.5s, INP 300ms → 120ms.",
           "Built the design system: 60+ components with visual regression in CI.",
-          "Replaced WebSocket with SSE streaming for the AI chatbot — TTFT −67%."
+          "Replaced WebSocket with SSE streaming for the AI chatbot — TTFT −67%.",
+          "Mentor three frontend engineers on review, performance and release standards.",
+          "Work AI-assisted daily — Claude Code for spec-driven refactors and codemods."
         ]
       },
       {
@@ -83,6 +97,15 @@
   "stack": {
     "widgetTitle": "Stack"
   },
+  "resume": {
+    "widgetTitle": "Résumé",
+    "headline": "Full résumé — English",
+    "updated": "Updated October 2026 · 2 pages",
+    "preview": "Preview",
+    "download": "Download PDF",
+    "openPage": "Open the résumé as its own page",
+    "contains": "Summary, core skills, experience, selected projects and education — print-ready A4."
+  },
   "projects": {
     "widgetTitle": "Projects",
     "dockLabel": "Projects dock",
@@ -93,6 +116,7 @@
       "period": "Period",
       "stack": "Stack",
       "highlights": "Highlights",
+      "screens": "Screens",
       "visit": "Visit project"
     },
     "roles": {
@@ -130,6 +154,16 @@
           "Lighthouse 90+ on key journeys"
         ]
       },
+      "selfit-landing": {
+        "name": "Selfit Corporate Site",
+        "tagline": "The public site that sells Selfit to HR and welfare teams",
+        "description": "Selfit's marketing site: the first thing an HR lead sees before any demo. Statically generated and bilingual, with the service catalogue, pricing story and lead capture all prerendered for search.",
+        "highlights": [
+          "Fully prerendered — every marketing page ships as static HTML",
+          "Bilingual, RTL-correct, sharing the product design system",
+          "Service catalogue and lead forms feed the same B2B pipeline"
+        ]
+      },
       "selfit-b2b": {
         "name": "Selfit B2B Admin",
         "tagline": "HR enrollment, budgets and analytics for organizations",
@@ -138,6 +172,16 @@
           "Virtualized data grids with server pagination for large orgs",
           "Interactive analytics: time-series charts, funnels and exports",
           "Role-based access control across organization hierarchies"
+        ]
+      },
+      "selfit-provider": {
+        "name": "Selfit Provider Panel",
+        "tagline": "Self-service console for the gyms, pools and clinics on Selfit",
+        "description": "The panel every partner venue uses to manage its branches, services, pricing and redemptions. OTP-only sign-in, role-scoped data, and a scan-to-redeem flow that has to work on a phone at a busy reception desk.",
+        "highlights": [
+          "Venue onboarding moved from a support ticket to a self-serve form",
+          "Scan-to-redeem settles a booking in seconds at the desk",
+          "Shares a component library with the B2B panel — one design system, two products"
         ]
       },
       "seltrip": {
@@ -150,6 +194,16 @@
           "SEO uplift via server metadata, sitemaps and on-demand ISR"
         ]
       },
+      "parsonline-ai": {
+        "name": "ParsOnline AI Assistant",
+        "tagline": "The streaming chat stack from Hiweb, generalized for a second ISP",
+        "description": "ParsOnline's customer-facing AI assistant. The streaming core proven at Hiweb became a reusable chat runtime: branding, knowledge base and intents are per-tenant configuration on top of a single codebase.",
+        "highlights": [
+          "A second ISP went live on the same runtime — configuration, not a rebuild",
+          "Token streaming over fetch/SSE, with sessions that survive a dropped connection",
+          "Answers grounded in each operator's own support corpus"
+        ]
+      },
       "esim": {
         "name": "eSIM Commerce",
         "tagline": "Buy and manage travel eSIMs — app and web",
@@ -158,6 +212,26 @@
           "Multi-step checkout tuned for conversion",
           "Instant QR provisioning flow with live activation status",
           "Shared design-system primitives across app and site"
+        ]
+      },
+      "rose-menu": {
+        "name": "Rose Café Menu",
+        "tagline": "A freelance digital menu: motion-led storefront plus its own admin",
+        "description": "A QR menu for a café — an animated, image-first storefront for guests and a full admin panel for categories, items, pricing and availability. Built phone-first, because nearly every visit is a phone at a table.",
+        "highlights": [
+          "Guest view is phone-first: large imagery, no zooming, no app to install",
+          "Admin panel for categories, items, pricing and availability",
+          "Framer Motion throughout, kept inside a tight mobile performance budget"
+        ]
+      },
+      "almas-dental": {
+        "name": "Almas Dental Clinic",
+        "tagline": "Freelance clinic site built around the question patients actually search",
+        "description": "A marketing site for a Tehran dental clinic, built around one question patients actually type: which supplementary insurance does this clinic accept. Statically generated, Persian-first, with structured data for local search.",
+        "highlights": [
+          "Statically generated — the whole site ships as prerendered HTML",
+          "Insurance coverage, services and FAQ modelled as structured data",
+          "Call and WhatsApp consultation paths above the fold"
         ]
       },
       "farda-insurance": {
@@ -185,7 +259,9 @@
   "a11y": {
     "close": "Close window",
     "openProject": "Open project",
-    "dragHint": "Drag to rearrange"
+    "dragHint": "Drag to rearrange",
+    "prev": "Previous screenshot",
+    "next": "Next screenshot"
   },
   "footer": {
     "madeWith": "Designed & built by Matin Zarifamin"

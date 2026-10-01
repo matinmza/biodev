@@ -7,14 +7,33 @@ export const PROJECT_IDS = [
   "hiweb-ai",
   "selfit-coach",
   "selfit-app",
+  "selfit-landing",
   "selfit-b2b",
+  "selfit-provider",
   "seltrip",
+  "parsonline-ai",
   "esim",
+  "rose-menu",
+  "almas-dental",
   "farda-insurance",
   "prodoc",
 ] as const;
 
 export type ProjectId = (typeof PROJECT_IDS)[number];
+
+/**
+ * A captured screen of the live product. Intrinsic size is stored so the
+ * gallery reserves the right box and never shifts layout while loading.
+ *
+ * Shots are not listed here: `scripts/index-shots.mjs` indexes whatever sits
+ * in `public/images/shots/<project id>/` into `shots.generated.ts`, so a file
+ * dropped in by hand shows up without editing this file.
+ */
+export interface ProjectShot {
+  src: string;
+  width: number;
+  height: number;
+}
 
 export interface Project {
   id: ProjectId;
@@ -32,16 +51,18 @@ export const projects: readonly Project[] = [
   {
     id: "hiweb-ai",
     role: "senior",
-    period: "2023 — 2025",
+    period: "2023 — 2026",
     gradient: ["#00CCFF", "#8866FF"],
     stack: ["Next.js", "TypeScript", "SSE Streaming", "OpenAI", "Tailwind"],
+    link: "http://chatbot.hiweb.ir",
   },
   {
     id: "selfit-coach",
     role: "senior",
-    period: "2024 — 2025",
+    period: "2024 — 2026",
     gradient: ["#FF7A59", "#FF3D81"],
     stack: ["Web Components", "TypeScript", "LLM Workflows", "Vite"],
+    link: "https://selfitapp.com",
   },
   {
     id: "selfit-app",
@@ -49,6 +70,15 @@ export const projects: readonly Project[] = [
     period: "2022 — Present",
     gradient: ["#34D399", "#0EA5E9"],
     stack: ["Next.js", "PWA", "React Query", "Sentry", "RUM"],
+    link: "https://app.selfit.ir",
+  },
+  {
+    id: "selfit-landing",
+    role: "senior",
+    period: "2023 — 2026",
+    gradient: ["#22C55E", "#15803D"],
+    stack: ["Next.js", "SSG", "i18n", "Technical SEO", "Tailwind"],
+    link: "https://selfit.ir",
   },
   {
     id: "selfit-b2b",
@@ -56,6 +86,15 @@ export const projects: readonly Project[] = [
     period: "2022 — Present",
     gradient: ["#6366F1", "#A855F7"],
     stack: ["React", "TypeScript", "ECharts", "Virtualization", "RBAC"],
+    link: "https://b2b.selfit.ir",
+  },
+  {
+    id: "selfit-provider",
+    role: "senior",
+    period: "2023 — Present",
+    gradient: ["#10B981", "#14B8A6"],
+    stack: ["React", "TypeScript", "OTP Auth", "React Query", "Vite"],
+    link: "https://provider.selfit.ir",
   },
   {
     id: "seltrip",
@@ -63,6 +102,15 @@ export const projects: readonly Project[] = [
     period: "2023 — 2024",
     gradient: ["#F59E0B", "#EF4444"],
     stack: ["Next.js App Router", "RSC", "ISR", "Edge Caching"],
+    link: "https://seltrip.agtan.ir",
+  },
+  {
+    id: "parsonline-ai",
+    role: "senior",
+    period: "2025 — 2026",
+    gradient: ["#38BDF8", "#2563EB"],
+    stack: ["Next.js", "SSE Streaming", "RAG", "TypeScript", "Tailwind"],
+    link: "https://chatbot.parsonline.com",
   },
   {
     id: "esim",
@@ -72,11 +120,28 @@ export const projects: readonly Project[] = [
     stack: ["Next.js", "TypeScript", "Design System", "Payments"],
   },
   {
+    id: "rose-menu",
+    role: "senior",
+    period: "2025",
+    gradient: ["#F59E0B", "#B45309"],
+    stack: ["Next.js", "Framer Motion", "Admin Panel", "Tailwind"],
+    link: "https://rose-menu-beta.vercel.app",
+  },
+  {
+    id: "almas-dental",
+    role: "senior",
+    period: "2025",
+    gradient: ["#2563EB", "#0EA5E9"],
+    stack: ["Next.js", "SSG", "Technical SEO", "Tailwind"],
+    link: "https://almasdentalclinic.ir",
+  },
+  {
     id: "farda-insurance",
     role: "engineer",
     period: "2021 — 2022",
     gradient: ["#10B981", "#047857"],
     stack: ["React", "TypeScript", "Multi-step Forms", "Payments"],
+    link: "https://www.fardains.ir",
   },
   {
     id: "prodoc",
