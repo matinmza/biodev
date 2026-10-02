@@ -63,6 +63,7 @@ export const resume = {
         "Next.js (App Router, RSC, SSR/ISR)",
         "Vite",
         "Web Components",
+        "PWA (service workers, offline, installable)",
       ],
     },
     {
@@ -93,6 +94,7 @@ export const resume = {
         "Code splitting",
         "RUM",
         "Lighthouse CI",
+        "Technical SEO (SSR/ISR, structured data)",
       ],
     },
     {
@@ -191,7 +193,7 @@ export const resume = {
         "Phone-first Persian products shipped end to end on my own: an animated QR menu with its own admin panel, and statically generated clinic and healthcare-AI sites built around structured data and local search.",
     },
     {
-      name: "Farda Insurance (2021 — 2022)",
+      name: "Farda Insurance — freelance (2021 — 2022)",
       summary:
         "Digital insurance platform: resumable quote→bind forms, payments, and a policy dashboard for renewals — accessible form UX with heavy validation.",
       link: "https://www.fardains.ir",

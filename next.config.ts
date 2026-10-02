@@ -33,6 +33,19 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   poweredByHeader: false,
+  // The résumé used to live at /matin-zarifamin.pdf. The file was renamed so a
+  // downloaded copy says what it is in a recruiter's folder, but the old
+  // address is on the deployed site and may be linked from somewhere nobody
+  // controls, so it keeps working.
+  async redirects() {
+    return [
+      {
+        source: "/matin-zarifamin.pdf",
+        destination: "/matin-zarifamin-senior-frontend-engineer.pdf",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

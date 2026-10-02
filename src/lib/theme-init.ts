@@ -9,10 +9,14 @@
  * after.
  *
  * It also records, and marks, whether this session has already seen the boot
- * splash. Both halves belong here for the same reason as the theme: the splash
- * is server-rendered and dismisses itself in CSS, so only a rule that lands
+ * splash. That belongs here for the same reason as the theme: the splash is
+ * server-rendered and dismisses itself in CSS, so only a rule that lands
  * before the first paint can keep it from covering a page the visitor was
- * already shown once this session.
+ * already shown once this session. The timer adds the mark once the first
+ * splash has finished playing, because a soft navigation back to the desktop
+ * remounts the splash without re-running this script — the panel would
+ * otherwise replay over a page that is already on screen. 900ms is just past
+ * the 0.55s delay and 0.3s fade in `globals.css`.
  */
 export const THEME_INIT = `(function(){try{
 var stored=localStorage.getItem("matinos-theme");
@@ -22,6 +26,8 @@ var dark=stored==="dark"||((!stored||stored==="system")&&night);
 var c=document.documentElement.classList;
 c.toggle("dark",dark);
 c.toggle("light",!dark);
-c.toggle("booted",sessionStorage.getItem("matinos-booted")!==null);
+var booted=sessionStorage.getItem("matinos-booted")!==null;
+c.toggle("booted",booted);
 sessionStorage.setItem("matinos-booted","1");
+if(!booted)setTimeout(function(){c.add("booted")},900);
 }catch(e){}})();`;

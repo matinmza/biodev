@@ -8,6 +8,7 @@ import {
   type ResponsiveLayouts,
 } from "react-grid-layout/legacy";
 import { useMounted } from "@/hooks/use-mounted";
+import { BREAKPOINTS, COLS, MARGIN, ROW_HEIGHT } from "./grid-geometry";
 import "react-grid-layout/css/styles.css";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -22,11 +23,6 @@ interface DesktopGridProps {
   entries: GridEntry[];
 }
 
-const BREAKPOINTS = { lg: 1024, md: 800, sm: 640, xs: 480, xxs: 0 };
-const COLS = { lg: 4, md: 4, sm: 2, xs: 2, xxs: 1 };
-const ROW_HEIGHT = 118;
-const MARGIN = 16;
-
 /**
  * The same positions, as CSS Grid placement.
  *
@@ -36,10 +32,13 @@ const MARGIN = 16;
  * Index measures. CSS Grid can express the same layout with no JavaScript at
  * all: `grid-auto-rows: 118px` with a 16px gap reproduces react-grid-layout's
  * `y * (rowHeight + margin)` arithmetic exactly, and the 16px padding stands in
- * for the margin it leaves around the outside. The three breakpoint tiers in
- * `.static-grid` (globals.css) read these variables, so the server-rendered
- * grid and the hydrated one are pixel-identical and the swap costs no layout
- * shift.
+ * for the margin it leaves around the outside. The tiers in `.static-grid`
+ * (globals.css) read these variables, so the server-rendered grid and the
+ * hydrated one are pixel-identical and the swap costs no layout shift.
+ *
+ * Only three tiers are needed because `md` repeats `lg` and `xs` repeats `sm`
+ * in `desktop.tsx` — give either its own layout and a tier has to be added
+ * here, which `desktop-grid.test.ts` will say out loud.
  */
 function placement(layouts: ResponsiveLayouts, key: string) {
   const tiers = [layouts.xxs, layouts.sm, layouts.lg];

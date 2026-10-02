@@ -30,8 +30,8 @@ export default function Wallpaper() {
           className="wallpaper-photo"
           style={
             {
-              "--wallpaper-light": `url(${light ?? dark})`,
-              "--wallpaper-dark": `url(${dark ?? light})`,
+              "--wallpaper-light": `url("${light ?? dark}")`,
+              "--wallpaper-dark": `url("${dark ?? light}")`,
             } as React.CSSProperties
           }
         />

@@ -3,7 +3,7 @@
  * Headless-browser capture with no new dependency: it drives whatever Chrome
  * or Edge is installed, over the DevTools protocol (Node 22 ships WebSocket).
  *
- *   node scripts/shoot.mjs resume          → public/matin-zarifamin.pdf
+ *   node scripts/shoot.mjs resume          → public/matin-zarifamin-senior-frontend-engineer.pdf
  *   node scripts/shoot.mjs shots [id]      → public/images/shots/<id>/<n>.png
  *
  * `resume` needs the site running (`npm run dev`, or `npm run build && npm start`);
@@ -437,7 +437,7 @@ async function buildResumePdf() {
     await sleep(1000);
   }
 
-  const out = join(ROOT, "public", "matin-zarifamin.pdf");
+  const out = join(ROOT, "public", "matin-zarifamin-senior-frontend-engineer.pdf");
   const browser = await launch();
   try {
     const tab = await openTab();

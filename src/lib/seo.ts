@@ -12,7 +12,7 @@ export { SITE_URL };
 export const RESUME_PAGE = "/en/resume";
 
 /** The downloadable résumé, printed from `RESUME_PAGE` into `public/`. */
-export const RESUME_PDF = "/matin-zarifamin.pdf";
+export const RESUME_PDF = "/matin-zarifamin-senior-frontend-engineer.pdf";
 
 /**
  * Every spelling of the name worth being found by, in both scripts. Search

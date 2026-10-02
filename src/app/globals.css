@@ -328,11 +328,14 @@ body {
  * plain CSS, from variables the markup carries, so the desktop is complete in
  * the first paint and react-grid-layout takes over a layout it already agrees
  * with. Gap and padding are its 16px margin; `grid-auto-rows` is its 118px
- * `rowHeight`. The tiers match its breakpoints, offset by the 32px of page
- * padding around the grid: react-grid-layout picks a breakpoint from the width
- * it measures on the container, not from the viewport, so its 640px and 800px
- * become 672px and 832px here. Getting that wrong is a layout shift at exactly
- * the widths a phone held sideways lands on.
+ * `rowHeight`. The tiers come from its `COLS`, not its layout list: `xs` and
+ * `sm` share a layout but `xs` is already 2 columns, and `md` and `lg` share
+ * one at 4, so the only two switches are 2 columns at `xs` (480) and 4 at `md`
+ * (800). Both are container widths — react-grid-layout measures the element,
+ * not the viewport, and compares with a strict `>` — so with the 32px of page
+ * padding around the grid they land at 513px and 833px here. Getting that
+ * wrong is a layout shift on hydration at exactly the widths a phone held
+ * sideways lands on, which is what `desktop-grid.test.ts` now guards.
  * ------------------------------------------------------------------------ */
 .static-grid {
   display: grid;
@@ -347,7 +350,7 @@ body {
   grid-row: var(--b0-y) / span var(--b0-h);
 }
 
-@media (min-width: 672px) {
+@media (min-width: 513px) {
   .static-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -357,7 +360,7 @@ body {
   }
 }
 
-@media (min-width: 832px) {
+@media (min-width: 833px) {
   .static-grid {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -383,9 +386,6 @@ body {
   background-image: var(--wallpaper-light);
   background-size: cover;
   background-position: center;
-  /* The element is already `position: fixed`; a fixed attachment on top of
-     that only buys a repaint on every scroll frame. */
-  background-attachment: scroll;
 }
 
 :root.dark .wallpaper-photo {

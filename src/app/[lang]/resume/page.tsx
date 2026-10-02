@@ -57,7 +57,7 @@ export const metadata: Metadata = {
 
 /**
  * The shareable résumé page. `npm run resume:pdf` prints this route into
- * `public/matin-zarifamin.pdf`, so the link and the file never disagree.
+ * `public/matin-zarifamin-senior-frontend-engineer.pdf`, so the link and the file never disagree.
  */
 export default async function ResumePage({
   params,

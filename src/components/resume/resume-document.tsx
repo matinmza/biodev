@@ -68,7 +68,7 @@ export default function ResumeDocument({ className }: { className?: string }) {
 
       {/* ---------- Skills ---------- */}
       <section className="mt-5">
-        <SectionTitle>Core skills</SectionTitle>
+        <SectionTitle>Skills</SectionTitle>
         <dl className="space-y-1">
           {resume.skills.map((group) => (
             <div
@@ -78,7 +78,7 @@ export default function ResumeDocument({ className }: { className?: string }) {
               <dt className="shrink-0 font-semibold text-zinc-900 sm:w-[150px]">
                 {group.label}
               </dt>
-              <dd className="text-zinc-700">{group.items.join(" · ")}</dd>
+              <dd className="text-zinc-700">{group.items.join(", ")}</dd>
             </div>
           ))}
         </dl>
@@ -100,13 +100,19 @@ export default function ResumeDocument({ className }: { className?: string }) {
                 </span>
               </div>
               <p className="mt-0.5 text-[11.5px] italic text-zinc-500">{role.context}</p>
+              {/* The bullet is a real character in a real text node. A
+                  `::before` dot and even a `list-style` marker are drawn
+                  rather than written, so neither survives the text extraction
+                  an ATS runs on the PDF — and a role whose bullets all vanish
+                  can come back as one run-on paragraph. */}
               <ul className="mt-1.5 space-y-1">
                 {role.points.map((point) => (
                   <li
                     key={point}
-                    className="relative break-inside-avoid pl-3.5 text-[12px] leading-[1.6] text-zinc-700 before:absolute before:left-0 before:top-[7px] before:h-1 before:w-1 before:rounded-full before:bg-zinc-400"
+                    className="flex gap-1.5 break-inside-avoid text-[12px] leading-[1.6] text-zinc-700"
                   >
-                    {point}
+                    <span aria-hidden="true" className="text-zinc-400">&bull;</span>
+                    <span>{point}</span>
                   </li>
                 ))}
               </ul>
@@ -117,7 +123,7 @@ export default function ResumeDocument({ className }: { className?: string }) {
 
       {/* ---------- Projects ---------- */}
       <section className="mt-5">
-        <SectionTitle>Selected projects</SectionTitle>
+        <SectionTitle>Selected Projects</SectionTitle>
         <ul className="space-y-1.5">
           {resume.projects.map((project) => (
             <li
