@@ -8,7 +8,7 @@
  * Files sort naturally (1.png, 2.png, 10.png), and intrinsic size is read
  * from each PNG header so the gallery reserves the right box up front.
  */
-import { existsSync, mkdirSync, openSync, readSync, closeSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, mkdirSync, openSync, readSync, closeSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -150,3 +150,18 @@ console.log(
       ? ` — wallpaper: light=${wallpapers.light ?? "css"}, dark=${wallpapers.dark ?? "css"}`
       : " — wallpaper: CSS (drop public/images/wallpaper-light.jpg to override)")
 );
+
+/**
+ * The résumé PDF is a committed artifact: it is printed from the running site
+ * by `npm run resume:pdf`, which needs a real Chrome and so cannot run on
+ * Vercel. It carries the site address in its contact line, so a domain change
+ * silently makes it wrong. Warn rather than fail — a deploy must not break
+ * over a stale link, but the regeneration should not be forgotten either.
+ */
+const pdf = join(ROOT, "public", "matin-zarifamin.pdf");
+const host = (process.env.NEXT_PUBLIC_SITE_URL ?? "").replace(/^https?:\/\//, "").replace(/\/$/, "");
+if (host && existsSync(pdf) && !readFileSync(pdf, "latin1").includes(host)) {
+  console.warn(
+    `! public/matin-zarifamin.pdf does not mention ${host} — run \`npm run resume:pdf\` against a server with NEXT_PUBLIC_SITE_URL set, then commit it.`
+  );
+}
