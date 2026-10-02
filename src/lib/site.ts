@@ -10,5 +10,5 @@
  * vitest, and the capture scripts.
  */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://matinzarifamin.ir"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://matinzarifamin.vercel.app"
 ).replace(/\/$/, "");

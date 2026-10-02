@@ -159,7 +159,17 @@ console.log(
  * over a stale link, but the regeneration should not be forgotten either.
  */
 const pdf = join(ROOT, "public", "matin-zarifamin.pdf");
-const host = (process.env.NEXT_PUBLIC_SITE_URL ?? "").replace(/^https?:\/\//, "").replace(/\/$/, "");
+// The configured domain, from the environment or — as on Vercel, where nothing
+// needs to be set — from the literal fallback in next.config.ts. Reading it out
+// of the config by hand is ugly, but this script runs before the Next build and
+// cannot import TypeScript, and a check that silently no-ops is worse.
+const configured =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  readFileSync(join(ROOT, "next.config.ts"), "utf8").match(
+    /"(https:\/\/[^"]+)"\s*\)\.replace/
+  )?.[1] ||
+  "";
+const host = configured.replace(/^https?:\/\//, "").replace(/\/$/, "");
 if (host && existsSync(pdf) && !readFileSync(pdf, "latin1").includes(host)) {
   console.warn(
     `! public/matin-zarifamin.pdf does not mention ${host} — run \`npm run resume:pdf\` against a server with NEXT_PUBLIC_SITE_URL set, then commit it.`
