@@ -7,6 +7,12 @@
  * dark a moment later. Keep this in step with `resolve()` in
  * `theme-provider.tsx`; they are the same rule, one before hydration and one
  * after.
+ *
+ * It also records, and marks, whether this session has already seen the boot
+ * splash. Both halves belong here for the same reason as the theme: the splash
+ * is server-rendered and dismisses itself in CSS, so only a rule that lands
+ * before the first paint can keep it from covering a page the visitor was
+ * already shown once this session.
  */
 export const THEME_INIT = `(function(){try{
 var stored=localStorage.getItem("matinos-theme");
@@ -16,4 +22,6 @@ var dark=stored==="dark"||((!stored||stored==="system")&&night);
 var c=document.documentElement.classList;
 c.toggle("dark",dark);
 c.toggle("light",!dark);
+c.toggle("booted",sessionStorage.getItem("matinos-booted")!==null);
+sessionStorage.setItem("matinos-booted","1");
 }catch(e){}})();`;

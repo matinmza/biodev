@@ -319,3 +319,135 @@ body {
 .dark .wallpaper::after {
   opacity: 0.05;
 }
+
+/* ---------------------------------------------------------------------------
+ * Server-rendered desktop grid
+ *
+ * react-grid-layout cannot place a widget until it has measured its container,
+ * so it renders nothing on the server. These rules reproduce its geometry in
+ * plain CSS, from variables the markup carries, so the desktop is complete in
+ * the first paint and react-grid-layout takes over a layout it already agrees
+ * with. Gap and padding are its 16px margin; `grid-auto-rows` is its 118px
+ * `rowHeight`. The tiers match its breakpoints, offset by the 32px of page
+ * padding around the grid: react-grid-layout picks a breakpoint from the width
+ * it measures on the container, not from the viewport, so its 640px and 800px
+ * become 672px and 832px here. Getting that wrong is a layout shift at exactly
+ * the widths a phone held sideways lands on.
+ * ------------------------------------------------------------------------ */
+.static-grid {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+  grid-auto-rows: 118px;
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.static-grid > * {
+  grid-column: var(--b0-x) / span var(--b0-w);
+  grid-row: var(--b0-y) / span var(--b0-h);
+}
+
+@media (min-width: 672px) {
+  .static-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .static-grid > * {
+    grid-column: var(--b1-x) / span var(--b1-w);
+    grid-row: var(--b1-y) / span var(--b1-h);
+  }
+}
+
+@media (min-width: 832px) {
+  .static-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .static-grid > * {
+    grid-column: var(--b2-x) / span var(--b2-w);
+    grid-row: var(--b2-y) / span var(--b2-h);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Wallpaper photo
+ *
+ * The photo used to be a `next/image` inside a client component, which meant
+ * the browser could not discover it until the JavaScript had run. As a CSS
+ * background on a server-rendered element it is found while the stylesheet is
+ * parsed. `--wallpaper-light` / `--wallpaper-dark` are set inline from the
+ * generated index, so dropping a file into public/images still works, and only
+ * the active theme's file is ever fetched.
+ * ------------------------------------------------------------------------ */
+.wallpaper-photo {
+  position: absolute;
+  inset: 0;
+  background-image: var(--wallpaper-light);
+  background-size: cover;
+  background-position: center;
+  /* The element is already `position: fixed`; a fixed attachment on top of
+     that only buys a repaint on every scroll frame. */
+  background-attachment: scroll;
+}
+
+:root.dark .wallpaper-photo {
+  background-image: var(--wallpaper-dark);
+  filter: brightness(0.68);
+}
+
+/* ---------------------------------------------------------------------------
+ * Boot splash
+ *
+ * Animated here rather than in JavaScript so it runs from the first paint and
+ * clears itself without waiting for hydration: an opaque panel over a page
+ * that has already arrived is the single most expensive thing a Speed Index
+ * run can be shown. Total life is 0.85s, and `forwards` is what makes it stay
+ * gone — `visibility: hidden` rather than `display: none` so the fade can
+ * actually be seen happening.
+ *
+ * A visitor who has already booted this session skips it entirely: the
+ * pre-paint script in `theme-init.ts` marks the session and sets `.booted`,
+ * which has to be CSS rather than a render-time check because reading storage
+ * during the first render is what breaks hydration.
+ * ------------------------------------------------------------------------ */
+.boot-screen {
+  animation: boot-out 0.3s ease-out 0.55s forwards;
+}
+
+.boot-mark {
+  animation: boot-in 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.boot-bar {
+  animation: boot-bar 0.6s ease-in-out both;
+}
+
+@keyframes boot-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes boot-in {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+
+@keyframes boot-bar {
+  from {
+    transform: translateX(-100%);
+  }
+}
+
+:root.booted .boot-screen {
+  display: none;
+}
+
+/* No animation means nothing would ever clear the panel, so skip the splash
+   altogether — a visitor who asked for less motion is not missing much. */
+@media (prefers-reduced-motion: reduce) {
+  .boot-screen {
+    display: none;
+  }
+}

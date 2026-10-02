@@ -1,22 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { MapPin, Mail } from "lucide-react";
 import { useI18n } from "@/i18n/i18n-provider";
 import { profile } from "@/data/profile";
 import { GitHubIcon, LinkedInIcon } from "@/components/shared/social-icons";
 import WidgetShell from "../widget-shell";
-
-const container = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { y: 14, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.45 } },
-};
 
 const chip =
   "flex items-center gap-1.5 rounded-full bg-black/5 px-3 py-1.5 text-xs font-medium text-zinc-800 transition-colors hover:bg-black/10 dark:bg-white/10 dark:text-zinc-100 dark:hover:bg-white/20";
@@ -27,13 +16,13 @@ export default function ProfileWidget() {
 
   return (
     <WidgetShell contentClassName="scrollbar-ios overflow-y-auto">
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={container}
-        className="flex h-full flex-col gap-4 p-6"
-      >
-        <motion.div variants={item} className="flex items-center gap-4">
+      {/* No entrance animation here on purpose. This widget is the first thing
+          the server renders, and framer-motion's `initial` state is written
+          into that HTML as `opacity: 0` — the page would arrive complete and
+          then paint blank until hydration faded it in, which is exactly what
+          Lighthouse's Speed Index punishes. */}
+      <div className="flex h-full flex-col gap-4 p-6">
+        <div className="flex items-center gap-4">
           <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl ring-2 ring-white/50 dark:ring-white/20">
             <Image
               src="/images/matin/matin1.png"
@@ -52,24 +41,21 @@ export default function ProfileWidget() {
               {dict.profile.role}
             </p>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.p
-          variants={item}
+        <p
           className="text-lg font-medium leading-snug text-zinc-800 dark:text-zinc-100"
         >
           {dict.profile.tagline}
-        </motion.p>
+        </p>
 
-        <motion.p
-          variants={item}
+        <p
           className="text-sm leading-7 text-zinc-700 dark:text-zinc-200"
         >
           {dict.profile.summary}
-        </motion.p>
+        </p>
 
-        <motion.div
-          variants={item}
+        <div
           className="mt-auto flex flex-wrap items-center gap-2 pt-1"
         >
           <a
@@ -94,10 +80,9 @@ export default function ProfileWidget() {
             <Mail size={13} />
             {dict.profile.cta.email}
           </a>
-        </motion.div>
+        </div>
 
-        <motion.div
-          variants={item}
+        <div
           className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-zinc-700 dark:text-zinc-300"
         >
           <span className="flex items-center gap-1">
@@ -111,8 +96,8 @@ export default function ProfileWidget() {
             </span>
             {dict.profile.availability}
           </span>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </WidgetShell>
   );
 }

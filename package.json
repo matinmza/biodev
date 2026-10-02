@@ -18,6 +18,12 @@
     "prebuild": "node scripts/index-shots.mjs",
     "pretest": "node scripts/index-shots.mjs"
   },
+  "browserslist": [
+    "chrome >= 111",
+    "safari >= 16.4",
+    "firefox >= 128",
+    "edge >= 111"
+  ],
   "dependencies": {
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",

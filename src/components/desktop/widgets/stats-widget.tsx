@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useI18n } from "@/i18n/i18n-provider";
 import WidgetShell from "../widget-shell";
 
@@ -12,14 +11,14 @@ export default function StatsWidget() {
 
   return (
     <WidgetShell contentClassName="grid grid-cols-2 items-center gap-2 px-4 py-3 sm:grid-cols-4">
-      {STAT_KEYS.map((key, i) => {
+      {/* Rendered plain, not faded in: these numbers are in the server HTML,
+          and a staggered entrance would hide them for half a second after the
+          page is already readable. */}
+      {STAT_KEYS.map((key) => {
         const stat = dict.stats.items[key];
         return (
-          <motion.div
+          <div
             key={key}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
             className="flex flex-col items-center gap-0.5 text-center"
           >
             <span className="bg-gradient-to-r from-accent-cyan to-accent-violet bg-clip-text text-2xl font-bold tabular-nums text-transparent">
@@ -28,7 +27,7 @@ export default function StatsWidget() {
             <span className="text-[11px] font-medium leading-tight text-zinc-700 dark:text-zinc-300">
               {stat.label}
             </span>
-          </motion.div>
+          </div>
         );
       })}
     </WidgetShell>
