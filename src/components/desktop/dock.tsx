@@ -52,7 +52,7 @@ function DockIcon({ id, name, mouseX, onOpen, isActive }: DockIconProps) {
     >
       <span
         role="tooltip"
-        className="pointer-events-none absolute -top-9 whitespace-nowrap rounded-md bg-black/75 px-2 py-1 text-[11px] font-medium text-white opacity-0 backdrop-blur transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100"
+        className="pointer-events-none absolute -top-9 z-10 whitespace-nowrap rounded-lg bg-black/80 px-2.5 py-1 text-xs font-medium text-white opacity-0 backdrop-blur transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100"
       >
         {name}
       </span>
@@ -78,20 +78,24 @@ export default function Dock() {
   return (
     <nav
       aria-label={dict.projects.dockLabel}
-      className="pointer-events-none fixed inset-x-0 bottom-3 z-40 flex flex-col items-center gap-1.5 px-3"
+      className="group/dock pointer-events-none fixed inset-x-0 bottom-3 z-40 flex flex-col items-center gap-1.5 px-3"
     >
-      {/* Without this label, visitors read the dock as decoration. */}
-      <p className="pointer-events-auto max-w-full truncate rounded-full bg-black/55 px-3 py-1 text-[11px] font-medium text-white/95 backdrop-blur-md">
+      {/* Without this label, visitors read the dock as decoration. It steps
+          aside while an icon's own label is showing in the same spot. */}
+      <p className="pointer-events-auto max-w-full truncate transition-opacity lg:group-has-[.dock-row:hover]/dock:opacity-0 rounded-full bg-black/55 px-3 py-1 text-[11px] font-medium text-white/95 backdrop-blur-md">
         <span className="font-semibold">{dict.projects.dockTitle}</span>
         <span className="mx-1.5 opacity-50">·</span>
         {dict.projects.dockHint}
       </p>
 
+      {/* A scroll container clips vertically too, which hid the hover labels
+          above the icons. From `lg` every icon fits, so it stops scrolling
+          there and the labels can rise above the dock. */}
       <div
         dir="ltr"
         onMouseMove={(e) => mouseX.set(e.clientX)}
         onMouseLeave={() => mouseX.set(Infinity)}
-        className="glass pointer-events-auto flex max-w-full items-end gap-2 overflow-x-auto rounded-3xl px-3 pb-2.5 pt-2 scrollbar-ios"
+        className="dock-row glass pointer-events-auto flex max-w-full items-end gap-2 overflow-x-auto rounded-3xl lg:overflow-visible px-3 pb-2.5 pt-2 scrollbar-ios"
       >
         {projects.map((project) => (
           <DockIcon

@@ -3,6 +3,9 @@ import { i18n, isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { profile } from "@/data/profile";
 
+// Static export: rendered once at build time.
+export const dynamic = "force-static";
+
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = "Matin Zarifamin — Senior Frontend Engineer";

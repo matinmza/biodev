@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next";
 import { i18n } from "@/i18n/config";
 import { SITE_URL, languageAlternates } from "@/lib/seo";
 
+// Static export: rendered once at build time.
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...i18n.locales.map((locale) => ({

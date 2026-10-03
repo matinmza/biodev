@@ -1,6 +1,9 @@
 import type { MetadataRoute } from "next";
 import en from "@/i18n/dictionaries/en.json";
 
+// Static export: rendered once at build time.
+export const dynamic = "force-static";
+
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: en.meta.title,

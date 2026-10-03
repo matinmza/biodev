@@ -263,6 +263,10 @@
     "prev": "Previous screenshot",
     "next": "Next screenshot"
   },
+  "hints": {
+    "drag": "Widgets move — drag the grip to rearrange them.",
+    "dismiss": "Got it"
+  },
   "footer": {
     "madeWith": "Designed & built by Matin Zarifamin"
   }

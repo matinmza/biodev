@@ -25,27 +25,13 @@ const siteUrl = (
 ).replace(/\/$/, "");
 
 const nextConfig: NextConfig = {
+  // Plain HTML/CSS/JS in `out/`: any static host or nginx can serve it, no
+  // Node process. That rules out the image optimizer, server redirects and the
+  // locale proxy — `/` now redirects in the browser (`app/(root)/page.tsx`).
+  output: "export",
   reactStrictMode: true,
   env: { NEXT_PUBLIC_SITE_URL: siteUrl },
-  images: {
-    // Screenshots are the only heavy assets left; serve them in the formats
-    // that are a third of the PNG weight.
-    formats: ["image/avif", "image/webp"],
-  },
-  poweredByHeader: false,
-  // The résumé used to live at /matin-zarifamin.pdf. The file was renamed so a
-  // downloaded copy says what it is in a recruiter's folder, but the old
-  // address is on the deployed site and may be linked from somewhere nobody
-  // controls, so it keeps working.
-  async redirects() {
-    return [
-      {
-        source: "/matin-zarifamin.pdf",
-        destination: "/matin-zarifamin-senior-frontend-engineer.pdf",
-        permanent: true,
-      },
-    ];
-  },
+  images: { unoptimized: true },
 };
 
 export default nextConfig;

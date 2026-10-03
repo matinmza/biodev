@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { i18n, isLocale, matchLocale } from "./config";
+import { isLocale, pickLocale } from "./config";
 
 describe("locale config", () => {
   it("recognizes supported locales", () => {
@@ -8,12 +8,18 @@ describe("locale config", () => {
     expect(isLocale("de")).toBe(false);
   });
 
-  it("matches Persian speakers to fa", () => {
-    expect(matchLocale("fa-IR,fa;q=0.9,en;q=0.8")).toBe("fa");
+  it("opens in Persian on Tehran time or for Persian speakers", () => {
+    expect(pickLocale(["en-US"], "Asia/Tehran")).toBe("fa");
+    expect(pickLocale(["fa-IR", "en"], "Europe/Berlin")).toBe("fa");
   });
 
-  it("falls back to the default locale otherwise", () => {
-    expect(matchLocale("en-US,en;q=0.9")).toBe(i18n.defaultLocale);
-    expect(matchLocale(null)).toBe(i18n.defaultLocale);
+  it("falls back to English otherwise", () => {
+    expect(pickLocale(["en-US", "de"], "Europe/Berlin")).toBe("en");
+    expect(pickLocale([])).toBe("en");
+  });
+
+  it("survives being inlined as source, as the root page does", () => {
+    const run = new Function(`return (${pickLocale.toString()})(["fa"])`);
+    expect(run()).toBe("fa");
   });
 });

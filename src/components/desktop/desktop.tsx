@@ -5,7 +5,7 @@ import { WindowProvider } from "./window-context";
 import MenuBar from "./menu-bar";
 import Dock from "./dock";
 import DesktopGrid, { type GridEntry } from "./desktop-grid";
-import { LAYOUTS } from "./grid-geometry";
+import { DragHintToast, useDragHint } from "./drag-hint";
 import ProfileWidget from "./widgets/profile-widget";
 import ClockWidget from "./widgets/clock-widget";
 import PhotoWidget from "./widgets/photo-widget";
@@ -29,13 +29,20 @@ const ENTRIES: GridEntry[] = [
 /** The whole MatinOS desktop: menu bar, widget grid, dock, windows. */
 export default function Desktop() {
   const { dict } = useI18n();
+  const hint = useDragHint();
 
   return (
     <WindowProvider>
       <MenuBar />
 
-      <div dir="ltr" className="mx-auto max-w-6xl px-4 pb-36 pt-14">
-        <DesktopGrid layouts={LAYOUTS} entries={ENTRIES} />
+      <DragHintToast active={hint.active} onDismiss={hint.dismiss} />
+
+      <div
+        dir="ltr"
+        data-drag-hint={hint.active || undefined}
+        className="mx-auto max-w-6xl px-4 pb-36 pt-14"
+      >
+        <DesktopGrid layouts={hint.layouts} entries={ENTRIES} />
 
         <footer className="mt-6 text-center text-xs font-medium text-white/85 [text-shadow:0_1px_3px_rgb(0_0_0/0.55)]">
           {dict.footer.madeWith}

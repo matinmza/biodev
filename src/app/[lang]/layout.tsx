@@ -95,6 +95,9 @@ export async function generateMetadata({
 }
 
 export const viewport: Viewport = {
+  // Android shrinks the page for the keyboard, so the full-screen terminal's
+  // prompt stays above it.
+  interactiveWidget: "resizes-content",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#dfe3ea" },
     { media: "(prefers-color-scheme: dark)", color: "#0a0b10" },

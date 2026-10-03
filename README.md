@@ -27,8 +27,8 @@ Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · Tailwind CSS 4
 
 ```bash
 npm run dev        # develop on http://localhost:3000
-npm run build      # production build
-npm start          # serve the build
+npm run build      # static export into out/
+npm start          # preview out/ locally
 npm test           # run the vitest suite
 npm run lint       # eslint
 npm run typecheck  # tsc --noEmit

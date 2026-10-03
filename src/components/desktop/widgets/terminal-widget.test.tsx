@@ -58,4 +58,27 @@ describe("<TerminalWidget />", () => {
     await userEvent.type(input, "{ArrowUp}");
     expect(input).toHaveValue("whoami");
   });
+
+  it("goes full screen on a phone and keeps the scrollback", async () => {
+    const matchMedia = vi
+      .spyOn(window, "matchMedia")
+      .mockReturnValue({ matches: true } as MediaQueryList);
+    renderWithProviders(<TerminalWidget />);
+    await typeCommand("whoami");
+
+    await userEvent.click(
+      screen.getByRole("textbox", { name: en.terminal.widgetTitle })
+    );
+    const dialog = screen.getByRole("dialog", {
+      name: en.terminal.widgetTitle,
+    });
+    expect(dialog).toHaveTextContent("whoami");
+    expect(
+      screen.getByRole("textbox", { name: en.terminal.widgetTitle })
+    ).toHaveFocus();
+
+    await userEvent.click(screen.getByRole("button", { name: en.a11y.close }));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    matchMedia.mockRestore();
+  });
 });

@@ -10,16 +10,18 @@ export function isLocale(value: string): value is Locale {
 }
 
 /**
- * Pick the locale for a visitor. Where they are decides it: a request from
- * Iran opens in Persian, everywhere else in English. The browser's
- * Accept-Language header is only the fallback, for the case where the platform
- * gave us no country (local development, a proxy that strips the header).
+ * Pick the locale for a visitor who landed on `/`. The site is a static
+ * export, so there is no edge to read a geo header from; the browser's clock
+ * stands in for it — a visitor on Tehran time opens in Persian — with the
+ * language list as the fallback.
+ *
+ * It runs in the browser as an inline script (`app/(root)/page.tsx` embeds its
+ * source), so it must stay self-contained: no imports, no outer variables.
  */
-export function matchLocale(
-  acceptLanguage: string | null,
-  country?: string | null
+export function pickLocale(
+  languages: readonly string[],
+  timeZone?: string
 ): Locale {
-  if (country) return country.toUpperCase() === "IR" ? "fa" : "en";
-  if (acceptLanguage?.toLowerCase().includes("fa")) return "fa";
-  return i18n.defaultLocale;
+  if (timeZone === "Asia/Tehran") return "fa";
+  return languages.some((l) => l.toLowerCase().startsWith("fa")) ? "fa" : "en";
 }
